@@ -9,7 +9,8 @@ import org.rsmod.map.square.MapSquareKey
  * are left behind once their locs are cleared, so they no longer render floating over the city.
  *
  * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
- * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. Ground level, the wall and
+ * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. The tower's four diagonal
+ * walkway arms, beyond the pillars where they join it, count as outside. Ground level, the wall and
  * everything outside it are left untouched. The rewrite is idempotent, so it can run on every build
  * against a cache it has already edited.
  */
@@ -36,6 +37,11 @@ object PrifddinasTerrain {
 
     private val CENTRAL_TOWER = Box(3248, 6067, 3280, 6100)
 
+    private const val NORTH_WEST_ARM_MIN_Z_MINUS_X = 2841
+    private const val NORTH_EAST_ARM_MIN_X_PLUS_Z = 9368
+    private const val SOUTH_WEST_ARM_MAX_X_PLUS_Z = 9324
+    private const val SOUTH_EAST_ARM_MAX_Z_MINUS_X = 2797
+
     private val KEPT_BUILDINGS =
         listOf(
             Box(3215, 6085, 3222, 6092),
@@ -53,7 +59,14 @@ object PrifddinasTerrain {
         }
 
     fun isCleared(x: Int, z: Int): Boolean =
-        isInsideCity(x, z) && KEPT_AREAS.none { it.contains(x, z) }
+        isInsideCity(x, z) && (KEPT_AREAS.none { it.contains(x, z) } || isTowerWalkwayArm(x, z))
+
+    private fun isTowerWalkwayArm(x: Int, z: Int): Boolean =
+        CENTRAL_TOWER.contains(x, z) &&
+            (z - x >= NORTH_WEST_ARM_MIN_Z_MINUS_X ||
+                x + z >= NORTH_EAST_ARM_MIN_X_PLUS_Z ||
+                x + z <= SOUTH_WEST_ARM_MAX_X_PLUS_Z ||
+                z - x <= SOUTH_EAST_ARM_MAX_Z_MINUS_X)
 
     private fun isInsideCity(x: Int, z: Int): Boolean =
         x in CITY_WEST_X..CITY_EAST_X &&
