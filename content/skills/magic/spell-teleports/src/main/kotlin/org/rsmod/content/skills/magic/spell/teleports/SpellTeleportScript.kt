@@ -176,7 +176,7 @@ constructor(
     ) {
         Home(
             "obj.48_home_teleport",
-            CoordGrid(3222, 3222, 0),
+            CoordGrid(3179, 3475, 0),
         ),
         Varrock(
             "obj.25_varrock_teleport",
