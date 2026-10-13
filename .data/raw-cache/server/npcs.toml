@@ -62,6 +62,26 @@ inherit = "npc.deadman_banker_blue_south"
 contentGroup = "content.banker"
 
 [[npc]]
+id = "npc.banker1_east"
+inherit = "npc.banker1_east"
+contentGroup = "content.banker"
+
+[[npc]]
+id = "npc.banker1_west"
+inherit = "npc.banker1_west"
+contentGroup = "content.banker"
+
+[[npc]]
+id = "npc.banker2_east"
+inherit = "npc.banker2_east"
+contentGroup = "content.banker"
+
+[[npc]]
+id = "npc.deadman_banker_grey_west"
+inherit = "npc.deadman_banker_grey_west"
+contentGroup = "content.banker"
+
+[[npc]]
 id = "npc.aide_tutor_banker"
 inherit = "npc.aide_tutor_banker"
 contentGroup = "content.banker_tutor"
