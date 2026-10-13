@@ -243,7 +243,7 @@ constructor(
     }
 
     public companion object {
-        public const val ZONE_VIEW_RADIUS: Int = 3
+        public const val ZONE_VIEW_RADIUS: Int = BuildAreaUtils.ZONE_VIEW_RADIUS
         public const val ZONE_VIEW_TOTAL_COUNT: Int =
             (2 * ZONE_VIEW_RADIUS + 1) * (2 * ZONE_VIEW_RADIUS + 1)
         private const val LEVEL_COUNT = 4
