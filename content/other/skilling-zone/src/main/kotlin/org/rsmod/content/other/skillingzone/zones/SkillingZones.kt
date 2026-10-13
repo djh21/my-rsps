@@ -70,6 +70,6 @@ constructor(private val locRepo: LocRepository, private val mapClock: MapClock) 
     private companion object {
         private const val REGROW_INTERVAL = 5
 
-        private val ZONES = listOf(CookingZone)
+        private val ZONES = emptyList<Zone>()
     }
 }
