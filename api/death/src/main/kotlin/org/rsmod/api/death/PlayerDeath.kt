@@ -18,6 +18,7 @@ import org.rsmod.api.player.hook.TeleportType
 import org.rsmod.api.player.protect.ProtectedAccess
 import org.rsmod.api.player.vars.boolVarBit
 import org.rsmod.api.player.vars.intVarp
+import org.rsmod.api.realm.Realm
 import org.rsmod.game.MapClock
 import org.rsmod.game.entity.Player
 import org.rsmod.map.CoordGrid
@@ -32,6 +33,7 @@ constructor(
     private val cleanupHooks: Set<PlayerDeathCleanupHook>,
     private val respawnHooks: Set<PlayerRespawnHook>,
     private val areaChecker: AreaChecker,
+    private val realm: Realm,
 ) {
     private var Player.specialAttackType by intVarp("varp.sa_attack")
     private var Player.inInstance by boolVarBit("varbit.player_in_instance")
@@ -43,7 +45,7 @@ constructor(
 
     private suspend fun ProtectedAccess.deathSequence() {
         val hooked = respawnHooks.firstNotNullOfOrNull { it.respawnCoords(player) }
-        val respawn = hooked ?: CoordGrid(0, 50, 50, 21, 18)
+        val respawn = hooked ?: realm.config.respawnCoord
         val randomRespawn =
             if (hooked != null) null else mapFindSquareLineOfWalk(respawn, minRadius = 0, maxRadius = 2)
 
