@@ -1,0 +1,9 @@
+[[object]]
+id = "loc.prif_crystal_staircase_k"
+inherit = "loc.prif_crystal_staircase_k"
+option1 = "Hidden"
+
+[[object]]
+id = "loc.prif_crystal_staircase_top_arches"
+inherit = "loc.prif_crystal_staircase_top_arches"
+option1 = "Hidden"
