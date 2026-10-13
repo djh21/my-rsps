@@ -214,11 +214,15 @@ constructor(
         }
 
     private fun ZoneKey.computeVisibleNeighbouringZones(): IntList {
-        val zones = IntArrayList(ZONE_VIEW_TOTAL_COUNT)
-        for (x in -ZONE_VIEW_RADIUS..ZONE_VIEW_RADIUS) {
-            for (z in -ZONE_VIEW_RADIUS..ZONE_VIEW_RADIUS) {
-                val zone = translate(x, z)
-                zones.add(zone.packed)
+        val zones = IntArrayList(ZONE_VIEW_TOTAL_COUNT * LEVEL_COUNT)
+        // The client renders every level, so locs changed above or below the player must sync too.
+        for (level in 0 until LEVEL_COUNT) {
+            val levelOffset = level - this.level
+            for (x in -ZONE_VIEW_RADIUS..ZONE_VIEW_RADIUS) {
+                for (z in -ZONE_VIEW_RADIUS..ZONE_VIEW_RADIUS) {
+                    val zone = translate(x, z, levelOffset)
+                    zones.add(zone.packed)
+                }
             }
         }
         return zones
@@ -242,6 +246,7 @@ constructor(
         public const val ZONE_VIEW_RADIUS: Int = 3
         public const val ZONE_VIEW_TOTAL_COUNT: Int =
             (2 * ZONE_VIEW_RADIUS + 1) * (2 * ZONE_VIEW_RADIUS + 1)
+        private const val LEVEL_COUNT = 4
 
         public val BUILD_AREA_BOUNDS: IntRange = 0 until BuildAreaUtils.SIZE
     }
