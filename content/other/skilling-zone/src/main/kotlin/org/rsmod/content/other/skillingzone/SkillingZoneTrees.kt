@@ -4,24 +4,23 @@ import com.github.michaelbull.logging.InlineLogger
 import dev.openrune.rscm.RSCM.asRSCM
 import dev.openrune.rscm.RSCMType
 import jakarta.inject.Inject
+import org.rsmod.api.game.process.GameLifecycle
 import org.rsmod.api.repo.loc.LocRepository
+import org.rsmod.api.script.onEvent
 import org.rsmod.api.script.onGameStartup
+import org.rsmod.game.MapClock
 import org.rsmod.game.loc.LocAngle
 import org.rsmod.game.loc.LocEntity
 import org.rsmod.game.loc.LocInfo
 import org.rsmod.game.loc.LocShape
-import org.rsmod.game.loc.LocZoneKey
-import org.rsmod.game.map.LocZoneStorage
 import org.rsmod.map.CoordGrid
-import org.rsmod.map.zone.ZoneGrid
-import org.rsmod.map.zone.ZoneKey
 import org.rsmod.plugin.scripts.PluginScript
 import org.rsmod.plugin.scripts.ScriptContext
 import org.rsmod.routefinder.loc.LocLayerConstants
 
 class SkillingZoneTrees
 @Inject
-constructor(private val locRepo: LocRepository, private val locZones: LocZoneStorage) :
+constructor(private val locRepo: LocRepository, private val mapClock: MapClock) :
     PluginScript() {
     private val logger = InlineLogger()
 
@@ -30,6 +29,7 @@ constructor(private val locRepo: LocRepository, private val locZones: LocZoneSto
             clearScenery()
             plantTrees()
         }
+        onEvent<GameLifecycle.LateCycle> { regrowTrees() }
     }
 
     private fun clearScenery() {
@@ -52,17 +52,28 @@ constructor(private val locRepo: LocRepository, private val locZones: LocZoneSto
         }
     }
 
-    // Registered as map locs so a chopped tree reverts from its stump; a spawned loc has no
-    // underlying map loc to revert to and would vanish once the stump timer elapses.
     private fun plantTrees() {
         for (tree in TREES) {
-            val shape = LocShape.CentrepieceStraight
-            val entity = LocEntity(tree.loc.asRSCM(RSCMType.LOC), shape.id, tree.angle.id)
-            val loc = LocInfo(LocLayerConstants.of(shape.id), tree.coords, entity)
-            val zoneKey = ZoneKey.from(tree.coords)
-            locZones.mapLocs[zoneKey, LocZoneKey(ZoneGrid.from(tree.coords), loc.layer)] = entity
-            locRepo.add(loc, Int.MAX_VALUE)
+            locRepo.add(tree.toLoc(), Int.MAX_VALUE)
         }
+    }
+
+    private fun regrowTrees() {
+        if (mapClock % REGROW_INTERVAL != 0) {
+            return
+        }
+        for (tree in TREES) {
+            val loc = tree.toLoc()
+            if (locRepo.findAll(loc.coords).none { it.layer == loc.layer }) {
+                locRepo.add(loc, Int.MAX_VALUE)
+            }
+        }
+    }
+
+    private fun TreeSpawn.toLoc(): LocInfo {
+        val shape = LocShape.CentrepieceStraight
+        val entity = LocEntity(loc.asRSCM(RSCMType.LOC), shape.id, angle.id)
+        return LocInfo(LocLayerConstants.of(shape.id), coords, entity)
     }
 
     private data class TreeSpawn(val loc: String, val coords: CoordGrid, val angle: LocAngle)
@@ -70,6 +81,8 @@ constructor(private val locRepo: LocRepository, private val locZones: LocZoneSto
     private data class ClearedScenery(val loc: String, val coords: CoordGrid)
 
     private companion object {
+        private const val REGROW_INTERVAL = 5
+
         private const val TREE = "loc.tree"
         private const val OAK = "loc.oaktree"
         private const val WILLOW = "loc.willowtree"
