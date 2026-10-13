@@ -47,10 +47,6 @@ npc = "npc.black_knight"
 coords = "0_50_54_34_62"
 
 [[spawn]]
-npc = "npc.boardgames_barmaid3"
-coords = "0_49_54_7_16"
-
-[[spawn]]
 npc = "npc.bond_james_bond"
 coords = "0_49_54_34_5"
 
@@ -61,10 +57,6 @@ coords = "0_49_54_34_5"
 [[spawn]]
 npc = "npc.brownbear"
 coords = "0_50_54_30_44"
-
-[[spawn]]
-npc = "npc.clan_clerk"
-coords = "0_49_54_45_15"
 
 [[spawn]]
 npc = "npc.con_contract_client_1"
@@ -101,10 +93,6 @@ coords = "0_51_53_4_1"
 [[spawn]]
 npc = "npc.drunk2"
 coords = "0_51_52_4_61"
-
-[[spawn]]
-npc = "npc.emblem_trader"
-coords = "0_49_54_27_48"
 
 [[spawn]]
 npc = "npc.fai_varrock_bench"
@@ -191,22 +179,6 @@ npc = "npc.gambler2"
 coords = "0_51_52_7_60"
 
 [[spawn]]
-npc = "npc.game_zone_recruiter_saradomin"
-coords = "0_49_54_5_16"
-
-[[spawn]]
-npc = "npc.game_zone_recruiter_zamorak"
-coords = "0_49_54_7_14"
-
-[[spawn]]
-npc = "npc.ge_boss"
-coords = "0_49_54_29_21"
-
-[[spawn]]
-npc = "npc.ge_expert_logs"
-coords = "0_49_54_16_33"
-
-[[spawn]]
 npc = "npc.gertrude"
 coords = "0_49_53_15_18"
 
@@ -273,10 +245,6 @@ coords = "0_49_53_19_14"
 [[spawn]]
 npc = "npc.katrine"
 coords = "0_49_52_50_57"
-
-[[spawn]]
-npc = "npc.lost_property_merchant_model"
-coords = "0_49_54_30_48"
 
 [[spawn]]
 npc = "npc.lowe"
@@ -775,22 +743,6 @@ npc = "npc.generalshopkeeper2"
 coords = "0_50_53_18_23"
 
 ## Varrock Grand Exchange Roof
-
-[[spawn]]
-npc = "npc.ge_expert_combat"
-coords = "0_49_54_20_42"
-
-[[spawn]]
-npc = "npc.ge_expert_herbs"
-coords = "0_49_54_20_25"
-
-[[spawn]]
-npc = "npc.ge_expert_ores"
-coords = "0_49_54_37_42"
-
-[[spawn]]
-npc = "npc.ge_expert_runes"
-coords = "0_49_54_37_25"
 
 ## Varrock Guard Posts
 
