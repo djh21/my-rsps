@@ -117,6 +117,37 @@ object PrifddinasTerrain {
         return out.toByteArray()
     }
 
+    fun linkBelowTiles(data: ByteArray): BooleanArray {
+        val linked = BooleanArray(MapSquareGrid.LENGTH * MapSquareGrid.LENGTH)
+        var pos = 0
+        for (level in 0 until LEVEL_COUNT) {
+            for (x in 0 until MapSquareGrid.LENGTH) {
+                for (z in 0 until MapSquareGrid.LENGTH) {
+                    while (true) {
+                        val opcode = data.u16(pos)
+                        pos += 2
+                        if (opcode == OPCODE_END) {
+                            break
+                        }
+                        if (opcode == OPCODE_HEIGHT) {
+                            pos++
+                            break
+                        }
+                        if (opcode <= OPCODE_OVERLAY_LAST) {
+                            pos += 2
+                        } else if (opcode <= OPCODE_SETTINGS_LAST && level == BRIDGE_FLAG_LEVEL) {
+                            val settings = opcode - SETTINGS_OFFSET
+                            if (settings and LINK_BELOW != 0) {
+                                linked[x * MapSquareGrid.LENGTH + z] = true
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return linked
+    }
+
     private fun squareOf(coord: Int): Int = coord / MapSquareGrid.LENGTH
 
     private fun ByteArray.u16(pos: Int): Int =
