@@ -1,0 +1,133 @@
+package org.rsmod.content.other.skillingzone.pack.terrain
+
+import java.io.ByteArrayOutputStream
+import org.rsmod.map.square.MapSquareGrid
+import org.rsmod.map.square.MapSquareKey
+
+/**
+ * Strips the raised floors (walkways, clan tower platforms, the Amlodd house and its bridge) that
+ * are left behind once their locs are cleared, so they no longer render floating over the city.
+ *
+ * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
+ * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. Ground level, the wall and
+ * everything outside it are left untouched. The rewrite is idempotent, so it can run on every build
+ * against a cache it has already edited.
+ */
+object PrifddinasTerrain {
+
+    private const val LEVEL_COUNT = 4
+    private const val BRIDGE_FLAG_LEVEL = 1
+    private const val LINK_BELOW = 0x2
+
+    private const val OPCODE_END = 0
+    private const val OPCODE_HEIGHT = 1
+    private const val OPCODE_OVERLAY_LAST = 49
+    private const val OPCODE_SETTINGS_LAST = 81
+    private const val SETTINGS_OFFSET = 49
+
+    private const val CITY_WEST_X = 3210
+    private const val CITY_EAST_X = 3317
+    private const val CITY_SOUTH_Z = 6025
+    private const val CITY_NORTH_Z = 6134
+    private const val CITY_SOUTH_WEST_MIN_X_PLUS_Z = 9253
+    private const val CITY_NORTH_EAST_MAX_X_PLUS_Z = 9433
+    private const val CITY_SOUTH_EAST_MIN_Z_MINUS_X = 2726
+    private const val CITY_NORTH_WEST_MAX_Z_MINUS_X = 2906
+
+    private val CENTRAL_TOWER = Box(3248, 6067, 3280, 6100)
+
+    private val KEPT_BUILDINGS =
+        listOf(
+            Box(3215, 6085, 3222, 6092),
+            Box(3253, 6037, 3259, 6042),
+            Box(3218, 6111, 3225, 6118),
+            Box(3306, 6052, 3311, 6058),
+            Box(3266, 6123, 3272, 6128),
+        )
+
+    private val KEPT_AREAS = listOf(CENTRAL_TOWER) + KEPT_BUILDINGS
+
+    val MAP_SQUARES: List<MapSquareKey> =
+        (squareOf(CITY_WEST_X)..squareOf(CITY_EAST_X)).flatMap { x ->
+            (squareOf(CITY_SOUTH_Z)..squareOf(CITY_NORTH_Z)).map { z -> MapSquareKey(x, z) }
+        }
+
+    fun isCleared(x: Int, z: Int): Boolean =
+        isInsideCity(x, z) && KEPT_AREAS.none { it.contains(x, z) }
+
+    private fun isInsideCity(x: Int, z: Int): Boolean =
+        x in CITY_WEST_X..CITY_EAST_X &&
+            z in CITY_SOUTH_Z..CITY_NORTH_Z &&
+            x + z >= CITY_SOUTH_WEST_MIN_X_PLUS_Z &&
+            x + z <= CITY_NORTH_EAST_MAX_X_PLUS_Z &&
+            z - x >= CITY_SOUTH_EAST_MIN_Z_MINUS_X &&
+            z - x <= CITY_NORTH_WEST_MAX_Z_MINUS_X
+
+    /**
+     * Rewrites a map square's terrain file. Each tile is a run of `u16` opcodes ending in `0`, or
+     * in `1` plus a height byte: `2..49` carry a `u16` overlay id, `50..81` the tile settings and
+     * `82+` the underlay. Opcodes are copied through in their original order, so every tile outside
+     * the edit area comes out byte-for-byte identical.
+     */
+    fun edit(square: MapSquareKey, data: ByteArray): ByteArray {
+        val baseX = square.x * MapSquareGrid.LENGTH
+        val baseZ = square.z * MapSquareGrid.LENGTH
+        val out = ByteArrayOutputStream(data.size)
+        var pos = 0
+        for (level in 0 until LEVEL_COUNT) {
+            for (x in 0 until MapSquareGrid.LENGTH) {
+                for (z in 0 until MapSquareGrid.LENGTH) {
+                    val cleared = isCleared(baseX + x, baseZ + z)
+                    val clearFloor = cleared && level > 0
+                    val unlink = cleared && level == BRIDGE_FLAG_LEVEL
+                    while (true) {
+                        val opcode = data.u16(pos)
+                        pos += 2
+                        when {
+                            opcode == OPCODE_END -> {
+                                out.writeShort(opcode)
+                                break
+                            }
+                            opcode == OPCODE_HEIGHT -> {
+                                out.writeShort(opcode)
+                                out.write(data[pos++].toInt())
+                                break
+                            }
+                            opcode <= OPCODE_OVERLAY_LAST -> {
+                                if (!clearFloor) {
+                                    out.writeShort(opcode)
+                                    out.write(data, pos, 2)
+                                }
+                                pos += 2
+                            }
+                            opcode <= OPCODE_SETTINGS_LAST -> {
+                                val settings = opcode - SETTINGS_OFFSET
+                                val kept = if (unlink) settings and LINK_BELOW.inv() else settings
+                                if (kept != 0) {
+                                    out.writeShort(kept + SETTINGS_OFFSET)
+                                }
+                            }
+                            !clearFloor -> out.writeShort(opcode)
+                        }
+                    }
+                }
+            }
+        }
+        out.write(data, pos, data.size - pos)
+        return out.toByteArray()
+    }
+
+    private fun squareOf(coord: Int): Int = coord / MapSquareGrid.LENGTH
+
+    private fun ByteArray.u16(pos: Int): Int =
+        ((this[pos].toInt() and 0xFF) shl 8) or (this[pos + 1].toInt() and 0xFF)
+
+    private fun ByteArrayOutputStream.writeShort(value: Int) {
+        write(value shr 8)
+        write(value)
+    }
+
+    private data class Box(val minX: Int, val minZ: Int, val maxX: Int, val maxZ: Int) {
+        fun contains(x: Int, z: Int): Boolean = x in minX..maxX && z in minZ..maxZ
+    }
+}
