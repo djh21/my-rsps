@@ -71,18 +71,19 @@ private fun layout(start: Int, pieces: List<WallPiece>): List<Pair<Int, WallPiec
 private fun run(length: Int): List<WallPiece> {
     require(length >= 0 && length != 1) { "A wall run can't be $length tile(s) long." }
     val target = length.toDouble() / PILLAR_SPACING
-    val pillars =
-        (0..length / PILLAR.length)
-            .filter { (length - it * PILLAR.length) % SECTION.length == 0 }
-            .filter {
-                val sectionCount = (length - it * PILLAR.length) / SECTION.length
-                it == 0 || sectionCount == 0 || it < sectionCount
-            }
-            .minBy { abs(it - target) }
+    val splits =
+        (0..length / PILLAR.length).filter { (length - it * PILLAR.length) % SECTION.length == 0 }
+    val balanced =
+        splits.filter {
+            val sectionCount = (length - it * PILLAR.length) / SECTION.length
+            it == 0 || sectionCount == 0 || it < sectionCount
+        }
+    val pillars = balanced.ifEmpty { splits }.minBy { abs(it - target) }
     val sections = (length - pillars * PILLAR.length) / SECTION.length
     val pillarAfter = (1..pillars).map { (it * sections.toDouble() / (pillars + 1)).roundToInt() }
 
     val pieces = mutableListOf<WallPiece>()
+    repeat(pillarAfter.count { it == 0 }) { pieces += PILLAR }
     for (i in 0 until sections) {
         pieces += if (i % 2 == 0) SECTION else SECTION_ALT
         repeat(pillarAfter.count { it == i + 1 }) { pieces += PILLAR }
