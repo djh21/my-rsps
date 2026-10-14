@@ -11,7 +11,8 @@ import org.rsmod.map.square.MapSquareKey
  * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
  * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. The tower's four diagonal
  * walkway arms, beyond the pillars where they join it, count as outside. On ground level only the
- * footprints of cleared houses change, losing the BLOCKED flag their walls left behind. The wall and
+ * footprints of cleared houses change, losing the BLOCKED flag their walls left behind, and inside
+ * the grassed skill zones the path overlay is stripped back to the grass beneath. The wall and
  * everything outside it are left untouched. The rewrite is idempotent, so it can run on every build
  * against a cache it has already edited.
  */
@@ -27,6 +28,7 @@ object PrifddinasTerrain {
     private const val OPCODE_OVERLAY_LAST = 49
     private const val OPCODE_SETTINGS_LAST = 81
     private const val SETTINGS_OFFSET = 49
+    private const val PATH_OVERLAY = 106
 
     private const val CITY_WEST_X = 3210
     private const val CITY_EAST_X = 3317
@@ -57,6 +59,8 @@ object PrifddinasTerrain {
 
     private val CLEARED_HOUSE_FOOTPRINTS = listOf(Box(3228, 6085, 3235, 6092))
 
+    private val GRASSED_ZONES = listOf(Box(3293, 6036, 3310, 6051))
+
     val MAP_SQUARES: List<MapSquareKey> =
         (squareOf(CITY_WEST_X)..squareOf(CITY_EAST_X)).flatMap { x ->
             (squareOf(CITY_SOUTH_Z)..squareOf(CITY_NORTH_Z)).map { z -> MapSquareKey(x, z) }
@@ -67,6 +71,8 @@ object PrifddinasTerrain {
 
     private fun isClearedHouse(x: Int, z: Int): Boolean =
         CLEARED_HOUSE_FOOTPRINTS.any { it.contains(x, z) }
+
+    private fun isGrassedZone(x: Int, z: Int): Boolean = GRASSED_ZONES.any { it.contains(x, z) }
 
     private fun isTowerWalkwayArm(x: Int, z: Int): Boolean =
         CENTRAL_TOWER.contains(x, z) &&
@@ -101,6 +107,7 @@ object PrifddinasTerrain {
                     val clearFloor = cleared && level > 0
                     val unlink = cleared && level == BRIDGE_FLAG_LEVEL
                     val unblock = level == 0 && isClearedHouse(baseX + x, baseZ + z)
+                    val grass = level == 0 && isGrassedZone(baseX + x, baseZ + z)
                     while (true) {
                         val opcode = data.u16(pos)
                         pos += 2
@@ -115,7 +122,8 @@ object PrifddinasTerrain {
                                 break
                             }
                             opcode <= OPCODE_OVERLAY_LAST -> {
-                                if (!clearFloor) {
+                                val path = grass && data.u16(pos) == PATH_OVERLAY
+                                if (!clearFloor && !path) {
                                     out.writeShort(opcode)
                                     out.write(data, pos, 2)
                                 }
