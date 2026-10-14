@@ -11,16 +11,13 @@ import org.rsmod.routefinder.loc.LocLayerConstants
 
 data class Zone(
     val name: String,
-    val cleared: List<ZoneScenery>,
-    val fence: List<ZoneLoc>,
+    val walls: List<ZoneLoc>,
     val resources: List<ZoneLoc>,
     val decorations: List<ZoneLoc>,
 ) {
     val spawns: List<ZoneLoc>
-        get() = fence + resources + decorations
+        get() = walls + resources + decorations
 }
-
-data class ZoneScenery(val loc: String, val coords: CoordGrid)
 
 data class ZoneLoc(
     val loc: String,
@@ -36,15 +33,6 @@ data class ZoneLoc(
 }
 
 internal const val ZONE_LEVEL = 0
-internal const val FENCE = "loc.prif_house_fence"
-
-internal fun scenery(loc: String, x: Int, z: Int) = ZoneScenery(loc, CoordGrid(x, z, ZONE_LEVEL))
-
-internal fun wall(x: Int, z: Int, angle: LocAngle) =
-    ZoneLoc(FENCE, CoordGrid(x, z, ZONE_LEVEL), LocShape.WallStraight, angle)
-
-internal fun corner(x: Int, z: Int, angle: LocAngle) =
-    ZoneLoc(FENCE, CoordGrid(x, z, ZONE_LEVEL), LocShape.WallL, angle)
 
 internal fun placed(
     loc: String,

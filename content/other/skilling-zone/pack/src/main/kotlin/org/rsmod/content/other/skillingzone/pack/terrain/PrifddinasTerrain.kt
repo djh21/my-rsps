@@ -10,7 +10,8 @@ import org.rsmod.map.square.MapSquareKey
  *
  * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
  * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. The tower's four diagonal
- * walkway arms, beyond the pillars where they join it, count as outside. Ground level, the wall and
+ * walkway arms, beyond the pillars where they join it, count as outside. On ground level only the
+ * footprints of cleared houses change, losing the BLOCKED flag their walls left behind. The wall and
  * everything outside it are left untouched. The rewrite is idempotent, so it can run on every build
  * against a cache it has already edited.
  */
@@ -18,6 +19,7 @@ object PrifddinasTerrain {
 
     private const val LEVEL_COUNT = 4
     private const val BRIDGE_FLAG_LEVEL = 1
+    private const val BLOCKED = 0x1
     private const val LINK_BELOW = 0x2
 
     private const val OPCODE_END = 0
@@ -53,6 +55,8 @@ object PrifddinasTerrain {
 
     private val KEPT_AREAS = listOf(CENTRAL_TOWER) + KEPT_BUILDINGS
 
+    private val CLEARED_HOUSE_FOOTPRINTS = listOf(Box(3228, 6085, 3235, 6092))
+
     val MAP_SQUARES: List<MapSquareKey> =
         (squareOf(CITY_WEST_X)..squareOf(CITY_EAST_X)).flatMap { x ->
             (squareOf(CITY_SOUTH_Z)..squareOf(CITY_NORTH_Z)).map { z -> MapSquareKey(x, z) }
@@ -60,6 +64,9 @@ object PrifddinasTerrain {
 
     fun isCleared(x: Int, z: Int): Boolean =
         isInsideCity(x, z) && (KEPT_AREAS.none { it.contains(x, z) } || isTowerWalkwayArm(x, z))
+
+    private fun isClearedHouse(x: Int, z: Int): Boolean =
+        CLEARED_HOUSE_FOOTPRINTS.any { it.contains(x, z) }
 
     private fun isTowerWalkwayArm(x: Int, z: Int): Boolean =
         CENTRAL_TOWER.contains(x, z) &&
@@ -93,6 +100,7 @@ object PrifddinasTerrain {
                     val cleared = isCleared(baseX + x, baseZ + z)
                     val clearFloor = cleared && level > 0
                     val unlink = cleared && level == BRIDGE_FLAG_LEVEL
+                    val unblock = level == 0 && isClearedHouse(baseX + x, baseZ + z)
                     while (true) {
                         val opcode = data.u16(pos)
                         pos += 2
@@ -115,7 +123,10 @@ object PrifddinasTerrain {
                             }
                             opcode <= OPCODE_SETTINGS_LAST -> {
                                 val settings = opcode - SETTINGS_OFFSET
-                                val kept = if (unlink) settings and LINK_BELOW.inv() else settings
+                                var kept = if (unlink) settings and LINK_BELOW.inv() else settings
+                                if (unblock) {
+                                    kept = kept and BLOCKED.inv()
+                                }
                                 if (kept != 0) {
                                     out.writeShort(kept + SETTINGS_OFFSET)
                                 }
