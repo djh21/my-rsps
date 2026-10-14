@@ -11,10 +11,10 @@ import org.rsmod.map.square.MapSquareKey
  * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
  * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. The tower's four diagonal
  * walkway arms, beyond the pillars where they join it, count as outside. On ground level the
- * footprints of cleared houses lose the BLOCKED flag their walls left behind, the grassed skill
- * zones have their path overlay stripped back to the grass beneath, and each reed pond copy takes
- * the ground tiles of the south-east reed pond, water and all. The wall and everything outside it
- * are left untouched. The rewrite is idempotent, so it can run on every build against a cache it
+ * footprints of cleared houses lose the BLOCKED flag their walls left behind, the grassed areas
+ * (the skill zones and the old archery range) have their path and floor overlays stripped back to
+ * the grass beneath, and each reed pond copy takes the ground tiles of the south-east reed pond,
+ * water and all. The wall and everything outside it are left untouched. The rewrite is idempotent, so it can run on every build against a cache it
  * has already edited.
  */
 object PrifddinasTerrain {
@@ -24,13 +24,14 @@ object PrifddinasTerrain {
     private const val BLOCKED = 0x1
     private const val LINK_BELOW = 0x2
     private const val TILES_PER_LEVEL = MapSquareGrid.LENGTH * MapSquareGrid.LENGTH
+    private const val PATH_OVERLAY = 106
+    private const val ARCHERY_FLOOR_OVERLAY = 81
 
     private const val OPCODE_END = 0
     private const val OPCODE_HEIGHT = 1
     private const val OPCODE_OVERLAY_LAST = 49
     private const val OPCODE_SETTINGS_LAST = 81
     private const val SETTINGS_OFFSET = 49
-    private const val PATH_OVERLAY = 106
 
     private const val CITY_WEST_X = 3210
     private const val CITY_EAST_X = 3317
@@ -61,7 +62,14 @@ object PrifddinasTerrain {
 
     private val CLEARED_HOUSE_FOOTPRINTS = listOf(Box(3228, 6085, 3235, 6092))
 
-    private val GRASSED_ZONES = listOf(Box(3293, 6036, 3310, 6051))
+    private val GRASSED_ZONES =
+        listOf(
+            Box(3293, 6036, 3310, 6051),
+            Box(3299, 6060, 3311, 6079),
+            Box(3289, 6070, 3298, 6078),
+        )
+
+    private val GRASSED_OVERLAYS = setOf(PATH_OVERLAY, ARCHERY_FLOOR_OVERLAY)
 
     private val REED_POND = Box(3299, 6039, 3303, 6043)
     private val REED_POND_COPY_CORNERS = listOf(3304 to 6045)
@@ -150,8 +158,8 @@ object PrifddinasTerrain {
                                 break
                             }
                             opcode <= OPCODE_OVERLAY_LAST -> {
-                                val path = grass && data.u16(pos) == PATH_OVERLAY
-                                if (!clearFloor && !path) {
+                                val grassed = grass && data.u16(pos) in GRASSED_OVERLAYS
+                                if (!clearFloor && !grassed) {
                                     out.writeShort(opcode)
                                     out.write(data, pos, 2)
                                 }
