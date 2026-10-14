@@ -53,7 +53,7 @@ class CookingEvents @Inject constructor(
         foods.forEach { food ->
             fireAndCamp.forEach { loc ->
                 onOpLocU(loc, food.raw.internalName) {
-                    cookFood(food, CookingSurface.Fire(loc))
+                    cookUsed(food, CookingSurface.Fire(loc))
                 }
             }
         }
@@ -61,7 +61,7 @@ class CookingEvents @Inject constructor(
             foods.forEach { food ->
                 onOpContentMixedLocU(content, food.raw.internalName) {
                     val surface = CookingSurface.Range(rangeType, it.type.internalName)
-                    if (canUseRange(surface)) cookFood(food, surface)
+                    if (canUseRange(surface)) cookUsed(food, surface)
                 }
             }
         }
@@ -146,15 +146,7 @@ class CookingEvents @Inject constructor(
         }
 
         if (cookable.size == 1) {
-            val food = cookable.first()
-            openSkillMulti(SkillMultiConfig(
-                verb = "cook",
-                entries = listOf(SkillMultiEntry(food.cooked.internalName, listOf(
-                    Material(food.raw.internalName),
-                ))),
-            )) { selection ->
-                cookFood(food, surface, selection.amount)
-            }
+            openFoodMenu(cookable.first(), surface)
             return
         }
 
@@ -169,6 +161,29 @@ class CookingEvents @Inject constructor(
             val food = cookable.firstOrNull {
                 it.cooked.internalName == selection.entry.internal
             } ?: return@openSkillMulti
+            cookFood(food, surface, selection.amount)
+        }
+    }
+
+    private suspend fun ProtectedAccess.cookUsed(food: CookingFoodsRow, surface: CookingSurface) {
+        if (player.cookingLvl < food.level) {
+            mes("You need a Cooking level of ${food.level} to cook ${food.raw.name}.")
+            return
+        }
+        if (inv.count(food.raw.internalName) == 1) {
+            cookInstant(food, surface)
+            return
+        }
+        openFoodMenu(food, surface)
+    }
+
+    private suspend fun ProtectedAccess.openFoodMenu(food: CookingFoodsRow, surface: CookingSurface) {
+        openSkillMulti(SkillMultiConfig(
+            verb = "cook",
+            entries = listOf(SkillMultiEntry(food.cooked.internalName, listOf(
+                Material(food.raw.internalName),
+            ))),
+        )) { selection ->
             cookFood(food, surface, selection.amount)
         }
     }
