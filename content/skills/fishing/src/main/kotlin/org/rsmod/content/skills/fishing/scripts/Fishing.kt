@@ -126,6 +126,7 @@ constructor(
 
         val attempt = prepare(spot, method, verbose = true) ?: return
 
+        faceEntitySquare(npc)
         startAnim(attempt)
         if (attempt.active.tool == SMALL_NET) {
             spam("You cast out your net...")
