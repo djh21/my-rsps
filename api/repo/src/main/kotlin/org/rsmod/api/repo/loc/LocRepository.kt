@@ -28,10 +28,12 @@ constructor(
 ) {
     private val addDurations = ArrayDeque<LocCycleDuration>()
     private val delDurations = ArrayDeque<LocCycleDuration>()
+    private val permanentSpawns = HashMap<LocSlot, LocInfo>()
 
     /**
      * Spawns [loc] and schedules its removal after [duration] map cycles when the spawn is
-     * timer-driven.
+     * timer-driven. A timed spawn over a permanent ([Int.MAX_VALUE]) spawn outside regions puts the
+     * permanent one back as it despawns, in the same cycle, the way a map loc reappears.
      *
      * @param onDespawn Invoked on the first [MapClock] tick **after** this loc is removed when the
      *   timer elapses, and only if the removal actually runs (region validator still valid). Never
@@ -39,6 +41,8 @@ constructor(
      *   the registry add fails.
      */
     public fun add(loc: LocInfo, duration: Int, onDespawn: (() -> Unit)? = null): Boolean {
+        val slot = LocSlot(loc.coords, loc.layer)
+        val underneath = permanentSpawns[slot]
         val add = locReg.add(loc)
 
         if (!add.isSuccess()) {
@@ -51,14 +55,36 @@ constructor(
         clearTimedDespawnAt(loc.coords, loc.layer)
         delDurations.removeExisting(loc)
 
+        if (add !is LocRegistryResult.Add.NormalSpawned) {
+            permanentSpawns.remove(slot)
+        } else if (duration == Int.MAX_VALUE) {
+            permanentSpawns[slot] = loc
+        }
+
         if (add.shouldDespawn() && duration != Int.MAX_VALUE) {
             val revertCycle = mapClock + duration
             val validator = add.regionValidator()
-            val locDuration = LocCycleDuration(loc, revertCycle, validator, onDespawn)
+            val restore = underneath?.takeIf { it != loc && permanentSpawns[slot] == it }
+            val despawn: (() -> Unit)? =
+                if (restore == null) {
+                    onDespawn
+                } else {
+                    {
+                        restorePermanentSpawn(slot, restore)
+                        onDespawn?.invoke()
+                    }
+                }
+            val locDuration = LocCycleDuration(loc, revertCycle, validator, despawn)
             addDurations.add(locDuration)
         }
 
         return true
+    }
+
+    private fun restorePermanentSpawn(slot: LocSlot, loc: LocInfo) {
+        if (permanentSpawns[slot] == loc) {
+            locReg.add(loc)
+        }
     }
 
     @Deprecated("rather than passing the type we should be migrating to using the rscm name.")
@@ -100,6 +126,11 @@ constructor(
 
         if (!delete.isSuccess()) {
             return false
+        }
+
+        val slot = LocSlot(loc.coords, loc.layer)
+        if (permanentSpawns[slot] == loc) {
+            permanentSpawns.remove(slot)
         }
 
         if (delete.canRespawn() && duration != Int.MAX_VALUE) {
@@ -247,6 +278,8 @@ constructor(
     )
 
     private data class RegionValidator(val slot: Int, val uid: Int)
+
+    private data class LocSlot(val coords: CoordGrid, val layer: Int)
 
     private companion object {
         private fun LocRegistryResult.Add.Success.shouldDespawn(): Boolean =
