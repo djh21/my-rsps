@@ -49,6 +49,6 @@ constructor(
     private companion object {
         private const val REGROW_INTERVAL = 5
 
-        private val ZONES = listOf(WoodcuttingZone, FishingZone)
+        private val ZONES = listOf(WoodcuttingZone, FishingZone, CookingZone)
     }
 }

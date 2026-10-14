@@ -7,3 +7,8 @@ option1 = "Hidden"
 id = "loc.prif_crystal_staircase_top_arches"
 inherit = "loc.prif_crystal_staircase_top_arches"
 option1 = "Hidden"
+
+[[object]]
+id = "loc.elf_village_range"
+inherit = "loc.elf_village_range"
+contentGroup = "content.cooking_range_standard"
