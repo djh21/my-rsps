@@ -14,6 +14,7 @@ data class Zone(
     val walls: List<ZoneLoc>,
     val resources: List<ZoneLoc>,
     val decorations: List<ZoneLoc>,
+    val npcs: List<ZoneNpc> = emptyList(),
 ) {
     val spawns: List<ZoneLoc>
         get() = walls + resources + decorations
@@ -32,6 +33,8 @@ data class ZoneLoc(
     }
 }
 
+data class ZoneNpc(val npc: String, val coords: CoordGrid)
+
 internal const val ZONE_LEVEL = 0
 
 internal fun placed(
@@ -40,4 +43,7 @@ internal fun placed(
     z: Int,
     angle: LocAngle,
     regrow: Boolean = false,
-) = ZoneLoc(loc, CoordGrid(x, z, ZONE_LEVEL), LocShape.CentrepieceStraight, angle, regrow)
+    shape: LocShape = LocShape.CentrepieceStraight,
+) = ZoneLoc(loc, CoordGrid(x, z, ZONE_LEVEL), shape, angle, regrow)
+
+internal fun spawned(npc: String, x: Int, z: Int) = ZoneNpc(npc, CoordGrid(x, z, ZONE_LEVEL))

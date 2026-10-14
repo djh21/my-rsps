@@ -7167,6 +7167,7 @@ loc.regicide_grass1 3292 6089 0 22
 loc.regicide_grass1 3294 6086 0 22
 loc.regicide_grass1 3308 6061 0 22
 loc.regicide_grass1 3311 6103 0 22
+loc.regicide_grass1 3306 6049 0 22
 loc.regicide_grass2 3214 6100 0 22
 loc.regicide_grass2 3215 6063 0 22
 loc.regicide_grass2 3215 6064 0 22
@@ -7260,6 +7261,7 @@ loc.regicide_grass2 3310 6104 0 22
 loc.regicide_grass2 3311 6069 0 22
 loc.regicide_grass2 3312 6098 0 22
 loc.regicide_grass2 3312 6101 0 22
+loc.regicide_grass2 3307 6049 0 22
 loc.regicide_grass3 3214 6065 0 22
 loc.regicide_grass3 3215 6055 0 22
 loc.regicide_grass3 3215 6062 0 22
@@ -7480,6 +7482,7 @@ loc.regicide_grass3 3312 6066 0 22
 loc.regicide_grass3 3312 6097 0 22
 loc.regicide_grass3 3312 6099 0 22
 loc.regicide_grass3 3312 6100 0 22
+loc.regicide_grass3 3307 6048 0 22
 loc.regicide_loom 3219 6074 0 10
 loc.regicide_rabbit_hutch 3285 6039 0 10
 loc.regicide_rabbit_hutch 3297 6039 0 10
@@ -7607,6 +7610,7 @@ loc.regicide_twigs1 3296 6040 0 22
 loc.regicide_twigs1 3299 6048 0 22
 loc.regicide_twigs1 3310 6061 0 22
 loc.regicide_twigs1 3311 6095 0 22
+loc.regicide_twigs1 3306 6047 0 22
 loc.regicide_twigs2 3215 6066 0 22
 loc.regicide_twigs2 3216 6062 0 22
 loc.regicide_twigs2 3226 6054 0 22
@@ -7660,6 +7664,7 @@ loc.regicide_twigs_fade 3301 6098 0 22
 loc.regicide_twigs_fade 3308 6093 0 22
 loc.regicide_twigs_fade 3310 6094 0 22
 loc.regicide_twigs_fade 3312 6067 0 22
+loc.regicide_twigs_fade 3304 6046 0 22
 loc.rooftop_footprints_brown 3257 6106 2 22
 loc.rooftop_footprints_brown 3269 6115 2 22
 loc.rooftop_footprints_brown 3272 6105 2 22

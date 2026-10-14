@@ -10,11 +10,12 @@ import org.rsmod.map.square.MapSquareKey
  *
  * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
  * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. The tower's four diagonal
- * walkway arms, beyond the pillars where they join it, count as outside. On ground level only the
- * footprints of cleared houses change, losing the BLOCKED flag their walls left behind, and inside
- * the grassed skill zones the path overlay is stripped back to the grass beneath. The wall and
- * everything outside it are left untouched. The rewrite is idempotent, so it can run on every build
- * against a cache it has already edited.
+ * walkway arms, beyond the pillars where they join it, count as outside. On ground level the
+ * footprints of cleared houses lose the BLOCKED flag their walls left behind, the grassed skill
+ * zones have their path overlay stripped back to the grass beneath, and each reed pond copy takes
+ * the ground tiles of the south-east reed pond, water and all. The wall and everything outside it
+ * are left untouched. The rewrite is idempotent, so it can run on every build against a cache it
+ * has already edited.
  */
 object PrifddinasTerrain {
 
@@ -22,6 +23,7 @@ object PrifddinasTerrain {
     private const val BRIDGE_FLAG_LEVEL = 1
     private const val BLOCKED = 0x1
     private const val LINK_BELOW = 0x2
+    private const val TILES_PER_LEVEL = MapSquareGrid.LENGTH * MapSquareGrid.LENGTH
 
     private const val OPCODE_END = 0
     private const val OPCODE_HEIGHT = 1
@@ -61,6 +63,9 @@ object PrifddinasTerrain {
 
     private val GRASSED_ZONES = listOf(Box(3293, 6036, 3310, 6051))
 
+    private val REED_POND = Box(3299, 6039, 3303, 6043)
+    private val REED_POND_COPY_CORNERS = listOf(3304 to 6045)
+
     val MAP_SQUARES: List<MapSquareKey> =
         (squareOf(CITY_WEST_X)..squareOf(CITY_EAST_X)).flatMap { x ->
             (squareOf(CITY_SOUTH_Z)..squareOf(CITY_NORTH_Z)).map { z -> MapSquareKey(x, z) }
@@ -73,6 +78,17 @@ object PrifddinasTerrain {
         CLEARED_HOUSE_FOOTPRINTS.any { it.contains(x, z) }
 
     private fun isGrassedZone(x: Int, z: Int): Boolean = GRASSED_ZONES.any { it.contains(x, z) }
+
+    private fun reedPondSource(x: Int, z: Int): Pair<Int, Int>? {
+        for ((cornerX, cornerZ) in REED_POND_COPY_CORNERS) {
+            val sourceX = REED_POND.minX + x - cornerX
+            val sourceZ = REED_POND.minZ + z - cornerZ
+            if (x >= cornerX && z >= cornerZ && REED_POND.contains(sourceX, sourceZ)) {
+                return sourceX to sourceZ
+            }
+        }
+        return null
+    }
 
     private fun isTowerWalkwayArm(x: Int, z: Int): Boolean =
         CENTRAL_TOWER.contains(x, z) &&
@@ -99,10 +115,22 @@ object PrifddinasTerrain {
         val baseX = square.x * MapSquareGrid.LENGTH
         val baseZ = square.z * MapSquareGrid.LENGTH
         val out = ByteArrayOutputStream(data.size)
+        val tileStarts by lazy { tileStarts(data) }
         var pos = 0
         for (level in 0 until LEVEL_COUNT) {
             for (x in 0 until MapSquareGrid.LENGTH) {
                 for (z in 0 until MapSquareGrid.LENGTH) {
+                    val pondSource = if (level == 0) reedPondSource(baseX + x, baseZ + z) else null
+                    if (pondSource != null) {
+                        val (sourceX, sourceZ) = pondSource
+                        check(sourceX - baseX in 0 until MapSquareGrid.LENGTH) { "Pond $pondSource" }
+                        check(sourceZ - baseZ in 0 until MapSquareGrid.LENGTH) { "Pond $pondSource" }
+                        val source = tileIndex(0, sourceX - baseX, sourceZ - baseZ)
+                        val start = tileStarts[source]
+                        out.write(data, start, tileStarts[source + 1] - start)
+                        pos = tileStarts[tileIndex(level, x, z) + 1]
+                        continue
+                    }
                     val cleared = isCleared(baseX + x, baseZ + z)
                     val clearFloor = cleared && level > 0
                     val unlink = cleared && level == BRIDGE_FLAG_LEVEL
@@ -179,6 +207,33 @@ object PrifddinasTerrain {
         }
         return linked
     }
+
+    private fun tileStarts(data: ByteArray): IntArray {
+        val starts = IntArray(LEVEL_COUNT * TILES_PER_LEVEL + 1)
+        var pos = 0
+        for (tile in 0 until LEVEL_COUNT * TILES_PER_LEVEL) {
+            starts[tile] = pos
+            while (true) {
+                val opcode = data.u16(pos)
+                pos += 2
+                if (opcode == OPCODE_END) {
+                    break
+                }
+                if (opcode == OPCODE_HEIGHT) {
+                    pos++
+                    break
+                }
+                if (opcode <= OPCODE_OVERLAY_LAST) {
+                    pos += 2
+                }
+            }
+        }
+        starts[LEVEL_COUNT * TILES_PER_LEVEL] = pos
+        return starts
+    }
+
+    private fun tileIndex(level: Int, x: Int, z: Int): Int =
+        level * TILES_PER_LEVEL + x * MapSquareGrid.LENGTH + z
 
     private fun squareOf(coord: Int): Int = coord / MapSquareGrid.LENGTH
 
