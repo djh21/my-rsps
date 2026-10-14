@@ -25,7 +25,6 @@ data class ZoneLoc(
     val coords: CoordGrid,
     val shape: LocShape,
     val angle: LocAngle,
-    val regrow: Boolean = false,
 ) {
     fun toLocInfo(): LocInfo {
         val entity = LocEntity(loc.asRSCM(RSCMType.LOC), shape.id, angle.id)
@@ -42,8 +41,7 @@ internal fun placed(
     x: Int,
     z: Int,
     angle: LocAngle,
-    regrow: Boolean = false,
     shape: LocShape = LocShape.CentrepieceStraight,
-) = ZoneLoc(loc, CoordGrid(x, z, ZONE_LEVEL), shape, angle, regrow)
+) = ZoneLoc(loc, CoordGrid(x, z, ZONE_LEVEL), shape, angle)
 
 internal fun spawned(npc: String, x: Int, z: Int) = ZoneNpc(npc, CoordGrid(x, z, ZONE_LEVEL))
