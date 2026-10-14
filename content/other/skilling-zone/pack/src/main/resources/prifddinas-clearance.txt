@@ -3525,6 +3525,10 @@ loc.inviswall 3235 6086 0 0
 loc.inviswall 3235 6087 0 0
 loc.inviswall 3235 6090 0 0
 loc.inviswall 3235 6091 0 0
+loc.inviswall_blockrange 3269 6046 0 0
+loc.inviswall_blockrange 3270 6046 0 0
+loc.inviswall_blockrange 3271 6046 0 0
+loc.inviswall_blockrange 3272 6046 0 0
 loc.inviswall_no_blockrange 3271 6105 2 0
 loc.inviswall_no_blockrange 3272 6104 2 0
 loc.inviswall_no_blockrange 3272 6106 2 0
@@ -4587,6 +4591,9 @@ loc.prif_crystal_lamp 3305 6042 0 10
 loc.prif_crystal_lamp 3308 6038 0 11
 loc.prif_crystal_lamp 3299 6071 0 10
 loc.prif_crystal_lamp 3299 6077 0 10
+loc.prif_crystal_lamp 3284 6031 0 10
+loc.prif_crystal_lamp 3266 6031 0 10
+loc.prif_crystal_lamp 3266 6044 0 10
 loc.prif_furnace 3287 6052 0 10
 loc.prif_house_arch 3222 6072 0 0
 loc.prif_house_arch 3222 6076 0 0
@@ -7050,6 +7057,9 @@ loc.prif_tree_normal_1 3300 6036 0 10
 loc.prif_tree_normal_1 3302 6046 0 10
 loc.prif_tree_normal_1 3306 6048 0 10
 loc.prif_tree_normal_1 3307 6050 0 10
+loc.prif_tree_normal_1 3279 6031 0 10
+loc.prif_tree_normal_1 3270 6030 0 10
+loc.prif_tree_normal_1 3285 6031 0 10
 loc.prif_tree_normal_2 3207 6114 0 10
 loc.prif_tree_normal_2 3208 6050 0 10
 loc.prif_tree_normal_2 3208 6060 0 10
@@ -7149,6 +7159,8 @@ loc.prif_tree_normal_2 3320 6115 0 10
 loc.prif_tree_normal_2 3296 6034 0 10
 loc.prif_tree_normal_2 3299 6044 0 10
 loc.prif_tree_normal_2 3308 6046 0 10
+loc.prif_tree_normal_2 3272 6031 0 10
+loc.prif_tree_normal_2 3281 6030 0 10
 loc.prif_tree_normal_2_nochop 3265 6117 0 10
 loc.prif_tree_normal_2_with_cat 3243 6086 0 10
 loc.qip_digsite_tent_roof 3244 6048 1 13
@@ -7571,6 +7583,9 @@ loc.regicide_rareflowers_2 3297 6043 0 11
 loc.regicide_rareflowers_2 3304 6059 0 11
 loc.regicide_rareflowers_2 3307 6059 0 10
 loc.regicide_rareflowers_2 3298 6050 0 10
+loc.regicide_rareflowers_2 3270 6033 0 10
+loc.regicide_rareflowers_2 3272 6030 0 10
+loc.regicide_rareflowers_2 3274 6030 0 10
 loc.regicide_rareflowers_3 3243 6068 0 11
 loc.regicide_rareflowers_3 3254 6056 0 11
 loc.regicide_rareflowers_3 3256 6061 0 11
@@ -7612,6 +7627,7 @@ loc.regicide_rock1 3286 6036 0 10
 loc.regicide_rock1 3286 6114 0 11
 loc.regicide_rock1 3304 6047 0 10
 loc.regicide_rock1 3236 6085 0 10
+loc.regicide_rock1 3268 6045 0 11
 loc.regicide_rock2 3219 6105 0 10
 loc.regicide_rock2 3245 6034 0 10
 loc.regicide_rock2 3285 6126 0 10
@@ -7632,6 +7648,9 @@ loc.regicide_rock3 3256 6113 0 10
 loc.regicide_rock3 3242 6097 0 10
 loc.regicide_rock3 3245 6096 0 10
 loc.regicide_rock3 3305 6043 0 10
+loc.regicide_rock3 3270 6046 0 11
+loc.regicide_rock3 3287 6035 0 10
+loc.regicide_rock3 3288 6037 0 10
 loc.regicide_rock4 3215 6054 0 11
 loc.regicide_rock4 3215 6099 0 10
 loc.regicide_rock4 3217 6060 0 11
@@ -7665,6 +7684,10 @@ loc.regicide_rock4 3244 6095 0 10
 loc.regicide_rock4 3297 6037 0 10
 loc.regicide_rock4 3298 6046 0 10
 loc.regicide_rock4 3306 6047 0 10
+loc.regicide_rock4 3271 6032 0 10
+loc.regicide_rock4 3274 6045 0 10
+loc.regicide_rock4 3272 6046 0 11
+loc.regicide_rock4 3288 6038 0 10
 loc.regicide_tree_fallen 3214 6063 0 10
 loc.regicide_twigs1 3235 6037 0 22
 loc.regicide_twigs1 3242 6037 0 22

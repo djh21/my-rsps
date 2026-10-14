@@ -67,6 +67,7 @@ object PrifddinasTerrain {
             Box(3293, 6036, 3310, 6051),
             Box(3299, 6060, 3311, 6079),
             Box(3289, 6070, 3298, 6078),
+            Box(3266, 6030, 3288, 6046),
         )
 
     private val GRASSED_OVERLAYS = setOf(PATH_OVERLAY, ARCHERY_FLOOR_OVERLAY)
