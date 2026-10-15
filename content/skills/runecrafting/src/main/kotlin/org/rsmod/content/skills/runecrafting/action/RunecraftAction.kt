@@ -8,10 +8,10 @@ import org.rsmod.api.stats.xpmod.XpModifiers
 import org.rsmod.api.table.ComboruneRecipeRow
 import org.rsmod.api.table.runecrafting.RunecraftingRunesRow
 import org.rsmod.content.skills.runecrafting.essencepouch.EssencePouch
-import org.rsmod.content.skills.runecrafting.items.BloodEssence
-import org.rsmod.content.skills.runecrafting.items.BloodEssence.applyBloodRuneBonus
 import org.rsmod.content.skills.runecrafting.items.BindingNecklace.consumeChargeAfterCombo
 import org.rsmod.content.skills.runecrafting.items.BindingNecklace.isWearing
+import org.rsmod.content.skills.runecrafting.items.BloodEssence
+import org.rsmod.content.skills.runecrafting.items.BloodEssence.applyBloodRuneBonus
 import org.rsmod.content.skills.runecrafting.items.RaimentsOfTheEye.applyBonus
 import org.rsmod.content.skills.runecrafting.magic.MagicImbue.isActive
 
@@ -23,8 +23,8 @@ object RunecraftAction {
     private const val DAEYALT_ESSENCE = EssencePouch.DAEYALT_ESSENCE
     private const val GUARDIAN_ESSENCE = EssencePouch.GUARDIAN_ESSENCE
     private const val DARK_ESSENCE = EssencePouch.DARK_ESSENCE_FRAGMENT
-    private const val DAEYALT_XP_MULTIPLIER = 1.5
-    private const val OURANIA_XP_MULTIPLIER = 1.7
+    const val DAEYALT_XP_MULTIPLIER = 1.5
+    const val OURANIA_XP_MULTIPLIER = 1.7
     private const val CORE_RUNE_MULTIPLIER = 11
     private const val CORE_XP_MULTIPLIER = 10
 
@@ -229,59 +229,6 @@ object RunecraftAction {
         return true
     }
 
-    suspend fun ProtectedAccess.craftOurania(xpMods: XpModifiers) {
-        val daeyaltCount = inv.count(DAEYALT_ESSENCE)
-        if (daeyaltCount > 0) {
-            craftOuraniaDaeyalt(xpMods, daeyaltCount)
-            return
-        }
-
-        if (!hasPureLikeEssence()) {
-            mesbox("You do not have any pure essence to bind.")
-            return
-        }
-
-        preCraft()
-
-        val essenceCount = countPureLikeEssence()
-        if (removePureLikeEssence(essenceCount).not()) {
-            return
-        }
-
-        craftOuraniaBatch(essenceCount, xpMultiplier = OURANIA_XP_MULTIPLIER, xpMods = xpMods)
-    }
-
-    private suspend fun ProtectedAccess.craftOuraniaDaeyalt(
-        xpMods: XpModifiers,
-        daeyaltCount: Int,
-    ) {
-        preCraft()
-        if (invDel(inv, DAEYALT_ESSENCE, daeyaltCount).failure) {
-            return
-        }
-        val xpMultiplier = DAEYALT_XP_MULTIPLIER * OURANIA_XP_MULTIPLIER
-        craftOuraniaBatch(daeyaltCount, xpMultiplier = xpMultiplier, xpMods = xpMods)
-    }
-
-    private suspend fun ProtectedAccess.craftOuraniaBatch(
-        essenceCount: Int,
-        xpMultiplier: Double,
-        xpMods: XpModifiers,
-    ) {
-        val level = player.baseRunecraftingLvl
-        var totalXp = 0.0
-
-        repeat(essenceCount) {
-            val rune = rollOuraniaRune(level)
-            val multiplier = getBonusMultiplier(rune.output.internalName, level).toInt()
-            val produced = applyBonus(multiplier)
-            totalXp += rune.xp * xpMultiplier * multiplier
-            invAdd(inv, rune.output.internalName, produced)
-        }
-
-        advanceRunecraftingXp(totalXp, xpMods)
-    }
-
     suspend fun ProtectedAccess.craftCore(
         rune: RunecraftingRunesRow,
         coreItem: String,
@@ -356,25 +303,6 @@ object RunecraftAction {
         invAdd(inv, aetherRune.output.internalName, totalRunes)
         advanceRunecraftingXp(craftCount * aetherRune.xp.toDouble(), xpMods)
     }
-
-    private fun rollOuraniaRune(level: Int): RunecraftingRunesRow {
-        val eligible =
-            RunecraftingRunesRow.all().filter { row ->
-                val output = row.output.internalName
-                output !in ouraniaExcludedRunes &&
-                    row.statReq.first().t1 <= level &&
-                    PURE_ESSENCE in row.input.map { it.internalName }
-            }
-        return eligible.randomOrNull() ?: RunecraftingRunesRow.all().first { it.output.internalName == "obj.airrune" }
-    }
-
-    private val ouraniaExcludedRunes =
-        setOf(
-            "obj.sunfirerune",
-            "obj.wrathrune",
-            "obj.aetherrune",
-            "obj.soulrune",
-        )
 
     fun getBonusMultiplier(rune: String, level: Int): Double =
         when (rune) {

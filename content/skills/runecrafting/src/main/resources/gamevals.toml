@@ -1,3 +1,7 @@
+[gamevals.loc]
+pure_essence_portal = 63100
+prifddinas_portal = 63101
+
 [gamevals.area]
 rune_essence_mine = 57
 

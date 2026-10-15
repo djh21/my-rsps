@@ -15,6 +15,7 @@ class EssencePortals : PluginScript() {
     }
 
     companion object {
+        val PURE_ESSENCE_PORTAL_DESTINATION = CoordGrid(2909, 4828)
 
         private val RUNE_ESSENCE_MINE = CoordGrid(2910, 4832)
         private const val LANDING_RADIUS = 20

@@ -5,7 +5,6 @@ import dev.openrune.rscm.RSCMType
 import jakarta.inject.Inject
 import org.rsmod.api.player.events.skilling.SkillingProductPrepareEvent
 import org.rsmod.api.player.events.skilling.SkillingProductSource
-import org.rsmod.api.player.stat.miningLvl
 import org.rsmod.api.player.stat.statAdvance
 import org.rsmod.api.random.GameRandom
 import org.rsmod.api.script.onEvent
@@ -19,16 +18,9 @@ class MiningProductPrepareScript @Inject constructor(private val random: GameRan
     override fun ScriptContext.startup() {
         onEvent<SkillingProductPrepareEvent> {
             val source = product.source as? SkillingProductSource.Mining ?: return@onEvent
-            applyEssenceUpgrade()
             applyBraceletOfClay(source.rockData)
             applySandstoneOrGranite(source.rockData)
             applyInfernalSmelt()
-        }
-    }
-
-    private fun SkillingProductPrepareEvent.applyEssenceUpgrade() {
-        if (product.item == "obj.blankrune" && product.player.miningLvl >= 30) {
-            product.item = "obj.blankrune_high"
         }
     }
 

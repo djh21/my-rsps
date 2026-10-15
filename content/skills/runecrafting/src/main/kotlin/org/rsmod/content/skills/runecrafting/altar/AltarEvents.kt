@@ -14,8 +14,9 @@ import org.rsmod.api.script.onOpLocU
 import org.rsmod.api.script.onPlayerLogin
 import org.rsmod.api.stats.xpmod.XpModifiers
 import org.rsmod.api.table.runecrafting.RunecraftingAltarsRow
-import org.rsmod.content.skills.runecrafting.action.RunecraftAction.craftOurania
+import org.rsmod.content.skills.runecrafting.action.OuraniaAltar.craftOurania
 import org.rsmod.content.skills.runecrafting.action.RunecraftAction.craftRune
+import org.rsmod.content.skills.runecrafting.essence.EssencePortals
 import org.rsmod.map.CoordGrid
 import org.rsmod.plugin.scripts.PluginScript
 import org.rsmod.plugin.scripts.ScriptContext
@@ -40,6 +41,26 @@ class AltarEvents @Inject constructor(
     private fun ScriptContext.registerOuraniaAltar() {
         onOpLoc1("loc.rc_zmi_dungeon_cracked_center_altar") {
             craftOurania(xpMods)
+        }
+
+        onOpLoc1("loc.poh_portal_teak_ourania") {
+            mes("You step through the portal...", ChatType.Spam)
+            telejump(OURANIA_ALTAR_ARRIVAL)
+            soundSynth("synth.teleport_all")
+        }
+
+        onOpLoc1("loc.pure_essence_portal") {
+            mes("You step through the portal...", ChatType.Spam)
+            telejump(EssencePortals.PURE_ESSENCE_PORTAL_DESTINATION)
+            soundSynth("synth.teleport_all")
+        }
+
+        for (crack in OURANIA_EXIT_CRACKS) {
+            onOpLoc1(crack) {
+                mes("You squeeze through the crack...", ChatType.Spam)
+                telejump(OURANIA_HUB_RETURN)
+                soundSynth("synth.teleport_all")
+            }
         }
     }
 
@@ -231,6 +252,14 @@ class AltarEvents @Inject constructor(
     }
 
     private companion object {
+        val OURANIA_ALTAR_ARRIVAL = CoordGrid(3059, 5577)
+        val OURANIA_HUB_RETURN = CoordGrid(3297, 6107)
+        val OURANIA_EXIT_CRACKS =
+            listOf(
+                "loc.rc_zmi_dungeon_wall_crack_entrance",
+                "loc.rc_zmi_dungeon_wall_crack_entrance_exit",
+            )
+
         val elementalAltarLocs =
             setOf(
                 "loc.air_altar",

@@ -336,7 +336,7 @@ object Mining {
                 columnRSCM(COL_ROCK_OBJECT, "loc.blankrunestone")
                 column(COL_LEVEL, 1)
                 column(COL_XP, 50)
-                columnRSCM(COL_ORE_ITEM, "obj.blankrune")
+                columnRSCM(COL_ORE_ITEM, "obj.blankrune_high")
                 column(COL_RESPAWN_CYCLES, 0)
                 column(COL_SUCCESS_RATE_LOW, 256)
                 column(COL_SUCCESS_RATE_HIGH, 256)
