@@ -8321,3 +8321,13 @@ loc.prif_tree_normal_1 3312 6120 0 10
 loc.prif_tree_normal_1 3313 6100 0 10
 loc.prif_mahoganytree 3301 6128 0 10
 loc.prif_mahoganytree 3304 6127 0 10
+loc.prif_tree_normal_1 3248 6092 0 10
+loc.prif_tree_normal_1 3249 6094 0 10
+loc.prif_tree_normal_1 3250 6089 0 10
+loc.prif_tree_normal_1 3251 6092 0 10
+loc.prif_tree_normal_1 3251 6094 0 10
+loc.prif_tree_normal_1 3251 6096 0 10
+loc.prif_tree_normal_1 3253 6094 0 10
+loc.prif_tree_normal_1 3255 6094 0 10
+loc.prif_tree_normal_2 3248 6085 0 10
+loc.prif_tree_normal_2 3254 6096 0 10
