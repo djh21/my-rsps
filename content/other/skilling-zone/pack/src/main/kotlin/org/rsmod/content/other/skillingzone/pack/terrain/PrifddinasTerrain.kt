@@ -56,12 +56,16 @@ object PrifddinasTerrain {
             Box(3253, 6037, 3259, 6042),
             Box(3218, 6111, 3225, 6118),
             Box(3306, 6052, 3311, 6058),
-            Box(3266, 6123, 3272, 6128),
         )
 
     private val KEPT_AREAS = listOf(CENTRAL_TOWER) + KEPT_BUILDINGS
 
-    private val CLEARED_HOUSE_FOOTPRINTS = listOf(Box(3228, 6085, 3235, 6092))
+    private val CLEARED_HOUSE_FOOTPRINTS =
+        listOf(
+            Box(3228, 6085, 3235, 6092),
+            Box(3266, 6123, 3272, 6128),
+            Box(3268, 6118, 3270, 6119),
+        )
 
     private val GRASSED_ZONES =
         listOf(
@@ -70,6 +74,9 @@ object PrifddinasTerrain {
             Box(3289, 6070, 3298, 6078),
             Box(3266, 6030, 3288, 6046),
             Box(3266, 6052, 3288, 6063),
+            Box(3267, 6119, 3293, 6132),
+            Box(3220, 6029, 3252, 6049),
+            Box(3268, 6118, 3270, 6118),
         )
 
     private val GRASSED_OVERLAYS =
