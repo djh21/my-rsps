@@ -4,7 +4,7 @@ import org.rsmod.game.loc.LocAngle.East
 import org.rsmod.game.loc.LocAngle.North
 import org.rsmod.game.loc.LocAngle.West
 
-private val SPOT_COLUMNS_X = listOf(3271, 3277, 3283)
+private val SPOT_COLUMNS_X = listOf(3273, 3279, 3285)
 private val SPOT_ROWS_Z = listOf(6041, 6037, 6033)
 
 private val ORE_ROWS =
@@ -17,7 +17,7 @@ private val ORE_ROWS =
 val MiningZone =
     Zone(
         name = "mining",
-        walls = prifWalls(3266, 6030, 3288, 6046, Entrance(Side.North, start = 3279, width = 4)),
+        walls = prifWalls(3266, 6030, 3288, 6046, Entrance(Side.West, start = 6037, width = 4)),
         resources =
             ORE_ROWS.zip(SPOT_ROWS_Z).flatMap { (ores, z) ->
                 ores.zip(SPOT_COLUMNS_X).flatMap { (ore, x) -> spot(ore, x, z) }

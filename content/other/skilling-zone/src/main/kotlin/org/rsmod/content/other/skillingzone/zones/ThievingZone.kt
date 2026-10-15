@@ -19,7 +19,7 @@ private const val STALL_Z = 6035
 val ThievingZone =
     Zone(
         name = "thieving",
-        walls = prifWalls(3220, 6029, 3252, 6049, Entrance(Side.North, start = 3235, width = 4)),
+        walls = prifWalls(3220, 6029, 3252, 6049, Entrance(Side.East, start = 6044, width = 4)),
         resources =
             List(STALL_COUNT) {
                 val stall = if (it % 2 == 0) SEED_STALL else RAG_STALL
@@ -30,20 +30,20 @@ val ThievingZone =
                 placed(BARREL, 3223, 6032, West),
                 placed(BARREL, 3249, 6032, North),
                 placed(BARREL, 3223, 6046, South),
-                placed(BARREL, 3249, 6046, East),
+                placed(BARREL, 3249, 6043, East),
                 placed(FLOWERS, 3225, 6032, East),
                 placed(FLOWERS_ALT, 3247, 6032, West),
                 placed(FLOWERS_ALT, 3225, 6046, East),
-                placed(FLOWERS, 3247, 6046, West),
+                placed(FLOWERS, 3247, 6043, West),
                 placed(FLOWERS, 3223, 6035, East),
                 placed(FLOWERS_ALT, 3249, 6035, West),
                 placed(FLOWERS, 3231, 6046, East),
-                placed(FLOWERS_ALT, 3243, 6046, West),
+                placed(FLOWERS_ALT, 3243, 6043, West),
             ),
         npcs =
             listOf(
                 spawned("npc.man", 3226, 6040),
-                spawned("npc.woman", 3245, 6042),
+                spawned("npc.woman", 3237, 6043),
                 spawned("npc.man2", 3231, 6042),
                 spawned("npc.woman2", 3246, 6038),
                 spawned("npc.man3", 3238, 6032),

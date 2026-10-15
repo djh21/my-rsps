@@ -8,11 +8,13 @@ import org.rsmod.game.loc.LocAngle
 class PrifWallsTest {
     @Test
     fun `every zone's walls close the ring except for the entrance`() {
-        assertRingClosed(3223, 6085, 3246, 6106, Entrance(Side.South, start = 3239, width = 4))
+        assertRingClosed(3223, 6085, 3246, 6106, Entrance(Side.East, start = 6087, width = 4))
         assertRingClosed(3293, 6036, 3310, 6051, Entrance(Side.North, start = 3300, width = 4))
         assertRingClosed(3299, 6060, 3311, 6079, Entrance(Side.West, start = 6064, width = 4))
-        assertRingClosed(3266, 6030, 3288, 6046, Entrance(Side.North, start = 3279, width = 4))
-        assertRingClosed(3266, 6052, 3288, 6063, Entrance(Side.East, start = 6056, width = 4))
+        assertRingClosed(3266, 6030, 3288, 6046, Entrance(Side.West, start = 6037, width = 4))
+        assertRingClosed(3266, 6052, 3288, 6063, Entrance(Side.West, start = 6056, width = 4))
+        assertRingClosed(3267, 6119, 3293, 6132, Entrance(Side.South, start = 3271, width = 4))
+        assertRingClosed(3220, 6029, 3252, 6049, Entrance(Side.East, start = 6044, width = 4))
     }
 
     @Test

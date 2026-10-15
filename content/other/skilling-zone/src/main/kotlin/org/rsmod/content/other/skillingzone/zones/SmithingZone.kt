@@ -20,7 +20,7 @@ private const val ANVIL_Z = 6055
 val SmithingZone =
     Zone(
         name = "smithing",
-        walls = prifWalls(3266, 6052, 3288, 6063, Entrance(Side.East, start = 6056, width = 4)),
+        walls = prifWalls(3266, 6052, 3288, 6063, Entrance(Side.West, start = 6056, width = 4)),
         resources =
             List(STATION_COUNT) {
                 placed(FURNACE, FIRST_STATION_X + it * STATION_GAP, FURNACE_Z, South)

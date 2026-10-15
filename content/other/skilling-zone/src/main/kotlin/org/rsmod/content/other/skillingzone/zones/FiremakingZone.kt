@@ -12,12 +12,12 @@ private const val FLOWERS_ALT = "loc.regicide_rareflowers_2"
 val FiremakingZone =
     Zone(
         name = "firemaking",
-        walls = prifWalls(3267, 6119, 3293, 6132, Entrance(Side.North, start = 3277, width = 4)),
+        walls = prifWalls(3267, 6119, 3293, 6132, Entrance(Side.South, start = 3271, width = 4)),
         resources = emptyList(),
         decorations =
             listOf(
                 placed(BARREL, 3270, 6122, West),
-                placed(FLOWERS_ALT, 3272, 6121, South),
+                placed(FLOWERS_ALT, 3275, 6122, South),
                 placed(FLOWERS, 3270, 6124, West),
                 placed(BARREL, 3270, 6129, South),
                 placed(FLOWERS_ALT, 3273, 6130, West),

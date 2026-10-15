@@ -8,12 +8,12 @@ import org.rsmod.game.loc.LocAngle.West
 val WoodcuttingZone =
     Zone(
         name = "woodcutting",
-        walls = prifWalls(3223, 6085, 3246, 6106, Entrance(Side.South, start = 3239, width = 4)),
+        walls = prifWalls(3223, 6085, 3246, 6106, Entrance(Side.East, start = 6087, width = 4)),
         resources =
             listOf(
                 placed(TREE, 3226, 6088, North),
                 placed(TREE, 3236, 6089, East),
-                placed(TREE, 3243, 6089, South),
+                placed(TREE, 3243, 6092, South),
                 placed(TREE, 3237, 6094, West),
                 placed(OAK, 3232, 6088, West),
                 placed(OAK, 3228, 6091, South),
