@@ -1,0 +1,168 @@
+[[varp]]
+id = "varp.prestige_0"
+scope = "Perm"
+transmit = "Never"
+
+[[varp]]
+id = "varp.prestige_1"
+scope = "Perm"
+transmit = "Never"
+
+[[varp]]
+id = "varp.prestige_2"
+scope = "Perm"
+transmit = "Never"
+
+[[varp]]
+id = "varp.prestige_3"
+scope = "Perm"
+transmit = "Never"
+
+[[varbit]]
+id = "varbit.prestige_attack"
+varp = "varp.prestige_0"
+startBit = 0
+endBit = 4
+
+[[varbit]]
+id = "varbit.prestige_defence"
+varp = "varp.prestige_0"
+startBit = 5
+endBit = 9
+
+[[varbit]]
+id = "varbit.prestige_strength"
+varp = "varp.prestige_0"
+startBit = 10
+endBit = 14
+
+[[varbit]]
+id = "varbit.prestige_hitpoints"
+varp = "varp.prestige_0"
+startBit = 15
+endBit = 19
+
+[[varbit]]
+id = "varbit.prestige_ranged"
+varp = "varp.prestige_0"
+startBit = 20
+endBit = 24
+
+[[varbit]]
+id = "varbit.prestige_prayer"
+varp = "varp.prestige_0"
+startBit = 25
+endBit = 29
+
+[[varbit]]
+id = "varbit.prestige_magic"
+varp = "varp.prestige_1"
+startBit = 0
+endBit = 4
+
+[[varbit]]
+id = "varbit.prestige_cooking"
+varp = "varp.prestige_1"
+startBit = 5
+endBit = 9
+
+[[varbit]]
+id = "varbit.prestige_woodcutting"
+varp = "varp.prestige_1"
+startBit = 10
+endBit = 14
+
+[[varbit]]
+id = "varbit.prestige_fletching"
+varp = "varp.prestige_1"
+startBit = 15
+endBit = 19
+
+[[varbit]]
+id = "varbit.prestige_fishing"
+varp = "varp.prestige_1"
+startBit = 20
+endBit = 24
+
+[[varbit]]
+id = "varbit.prestige_firemaking"
+varp = "varp.prestige_1"
+startBit = 25
+endBit = 29
+
+[[varbit]]
+id = "varbit.prestige_crafting"
+varp = "varp.prestige_2"
+startBit = 0
+endBit = 4
+
+[[varbit]]
+id = "varbit.prestige_smithing"
+varp = "varp.prestige_2"
+startBit = 5
+endBit = 9
+
+[[varbit]]
+id = "varbit.prestige_mining"
+varp = "varp.prestige_2"
+startBit = 10
+endBit = 14
+
+[[varbit]]
+id = "varbit.prestige_herblore"
+varp = "varp.prestige_2"
+startBit = 15
+endBit = 19
+
+[[varbit]]
+id = "varbit.prestige_agility"
+varp = "varp.prestige_2"
+startBit = 20
+endBit = 24
+
+[[varbit]]
+id = "varbit.prestige_thieving"
+varp = "varp.prestige_2"
+startBit = 25
+endBit = 29
+
+[[varbit]]
+id = "varbit.prestige_slayer"
+varp = "varp.prestige_3"
+startBit = 0
+endBit = 4
+
+[[varbit]]
+id = "varbit.prestige_farming"
+varp = "varp.prestige_3"
+startBit = 5
+endBit = 9
+
+[[varbit]]
+id = "varbit.prestige_runecrafting"
+varp = "varp.prestige_3"
+startBit = 10
+endBit = 14
+
+[[varbit]]
+id = "varbit.prestige_hunter"
+varp = "varp.prestige_3"
+startBit = 15
+endBit = 19
+
+[[varbit]]
+id = "varbit.prestige_construction"
+varp = "varp.prestige_3"
+startBit = 20
+endBit = 24
+
+[[varbit]]
+id = "varbit.prestige_sailing"
+varp = "varp.prestige_3"
+startBit = 25
+endBit = 29
+
+[[npc]]
+id = "npc.prestige_master"
+inherit = "npc.wise_old_man"
+name = "Prestige Master"

@@ -13,7 +13,7 @@ import org.rsmod.game.stat.PlayerStatMap
 
 public object PlayerSkillXP {
     public fun internalAddXP(player: Player, stat: String, xp: Double, rate: Double): Int =
-        player.addXP(stat, xp, rate)
+        player.addXP(stat, xp, rate * PlayerXpMultipliers.of(player, stat))
 
     private fun Player.addXP(stat: String, xp: Double, rate: Double): Int {
         val fineXp = PlayerStatMap.toFineXP(xp * rate)

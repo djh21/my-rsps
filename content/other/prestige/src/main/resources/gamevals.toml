@@ -1,0 +1,63 @@
+[gamevals.npc]
+prestige_master = 63100
+
+[gamevals.varp]
+prestige_0 = 65310
+prestige_1 = 65311
+prestige_2 = 65312
+prestige_3 = 65313
+
+[gamevals.varbit]
+prestige_attack = 65310
+prestige_defence = 65311
+prestige_strength = 65312
+prestige_hitpoints = 65313
+prestige_ranged = 65314
+prestige_prayer = 65315
+prestige_magic = 65316
+prestige_cooking = 65317
+prestige_woodcutting = 65318
+prestige_fletching = 65319
+prestige_fishing = 65320
+prestige_firemaking = 65321
+prestige_crafting = 65322
+prestige_smithing = 65323
+prestige_mining = 65324
+prestige_herblore = 65325
+prestige_agility = 65326
+prestige_thieving = 65327
+prestige_slayer = 65328
+prestige_farming = 65329
+prestige_runecrafting = 65330
+prestige_hunter = 65331
+prestige_construction = 65332
+prestige_sailing = 65333
+
+[gamevals.dbtable]
+prestige_bonuses = 65470
+
+[gamevals.dbrow]
+prestige_attack = 63000
+prestige_defence = 63001
+prestige_strength = 63002
+prestige_hitpoints = 63003
+prestige_ranged = 63004
+prestige_prayer = 63005
+prestige_magic = 63006
+prestige_cooking = 63007
+prestige_woodcutting = 63008
+prestige_fletching = 63009
+prestige_fishing = 63010
+prestige_firemaking = 63011
+prestige_crafting = 63012
+prestige_smithing = 63013
+prestige_mining = 63014
+prestige_herblore = 63015
+prestige_agility = 63016
+prestige_thieving = 63017
+prestige_slayer = 63018
+prestige_farming = 63019
+prestige_runecrafting = 63020
+prestige_hunter = 63021
+prestige_construction = 63022
+prestige_sailing = 63023
