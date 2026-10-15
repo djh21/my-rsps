@@ -26,6 +26,7 @@ object PrifddinasTerrain {
     private const val TILES_PER_LEVEL = MapSquareGrid.LENGTH * MapSquareGrid.LENGTH
     private const val PATH_OVERLAY = 106
     private const val ARCHERY_FLOOR_OVERLAY = 81
+    private const val TELEPORT_PLATFORM_OVERLAY = 42
 
     private const val OPCODE_END = 0
     private const val OPCODE_HEIGHT = 1
@@ -68,9 +69,11 @@ object PrifddinasTerrain {
             Box(3299, 6060, 3311, 6079),
             Box(3289, 6070, 3298, 6078),
             Box(3266, 6030, 3288, 6046),
+            Box(3266, 6052, 3288, 6063),
         )
 
-    private val GRASSED_OVERLAYS = setOf(PATH_OVERLAY, ARCHERY_FLOOR_OVERLAY)
+    private val GRASSED_OVERLAYS =
+        setOf(PATH_OVERLAY, ARCHERY_FLOOR_OVERLAY, TELEPORT_PLATFORM_OVERLAY)
 
     private val REED_POND = Box(3299, 6039, 3303, 6043)
     private val REED_POND_COPY_CORNERS = listOf(3304 to 6045)
