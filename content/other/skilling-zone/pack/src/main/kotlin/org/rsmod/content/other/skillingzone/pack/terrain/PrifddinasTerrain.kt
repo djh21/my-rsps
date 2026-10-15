@@ -11,11 +11,11 @@ import org.rsmod.map.square.MapSquareKey
  * Every tile inside the city wall, but outside the central tower and the kept buildings, loses its
  * overlay and underlay on planes 1-3 and its LINK_BELOW flag on plane 1. The tower's four diagonal
  * walkway arms, beyond the pillars where they join it, count as outside. On ground level the
- * footprints of cleared houses lose the BLOCKED flag their walls left behind, the grassed areas
- * (the skill zones and the old archery range) have their path and floor overlays stripped back to
- * the grass beneath, and each reed pond copy takes the ground tiles of the south-east reed pond,
- * water and all. The wall and everything outside it are left untouched. The rewrite is idempotent, so it can run on every build against a cache it
- * has already edited.
+ * footprints of cleared houses lose the BLOCKED flag their walls left behind, the old paving and
+ * floor overlays are replaced by grass everywhere except the path network, which is paved with the
+ * path overlay, and each reed pond copy takes the ground tiles of the south-east reed pond, water
+ * and all. The wall and everything outside it are left untouched. The rewrite is idempotent, so it
+ * can run on every build against a cache it has already edited.
  */
 object PrifddinasTerrain {
 
@@ -25,14 +25,15 @@ object PrifddinasTerrain {
     private const val LINK_BELOW = 0x2
     private const val TILES_PER_LEVEL = MapSquareGrid.LENGTH * MapSquareGrid.LENGTH
     private const val PATH_OVERLAY = 106
-    private const val ARCHERY_FLOOR_OVERLAY = 81
-    private const val TELEPORT_PLATFORM_OVERLAY = 42
+    private const val GRASS_UNDERLAY = 48
+    private const val OVERLAY_OPCODE_SHAPE_0 = 2
 
     private const val OPCODE_END = 0
     private const val OPCODE_HEIGHT = 1
     private const val OPCODE_OVERLAY_LAST = 49
     private const val OPCODE_SETTINGS_LAST = 81
     private const val SETTINGS_OFFSET = 49
+    private const val UNDERLAY_OFFSET = 81
 
     private const val CITY_WEST_X = 3210
     private const val CITY_EAST_X = 3317
@@ -67,20 +68,32 @@ object PrifddinasTerrain {
             Box(3268, 6118, 3270, 6119),
         )
 
-    private val GRASSED_ZONES =
+    private val STRIPPED_OVERLAYS = setOf(106, 81, 61, 22, 42)
+    private val RECOLOURED_UNDERLAYS = setOf(67, 50, 115, 19)
+
+    private val PATH_ZONES =
         listOf(
-            Box(3293, 6036, 3310, 6051),
-            Box(3299, 6060, 3311, 6079),
-            Box(3289, 6070, 3298, 6078),
-            Box(3266, 6030, 3288, 6046),
-            Box(3266, 6052, 3288, 6063),
-            Box(3267, 6119, 3293, 6132),
-            Box(3220, 6029, 3252, 6049),
-            Box(3268, 6118, 3270, 6118),
+            Box(3263, 6037, 3265, 6066),
+            Box(3253, 6044, 3263, 6045),
+            Box(3247, 6082, 3248, 6090),
+            Box(3247, 6082, 3250, 6083),
+            Box(3281, 6082, 3298, 6083),
+            Box(3297, 6052, 3298, 6081),
+            Box(3297, 6052, 3303, 6053),
+            Box(3263, 6101, 3264, 6117),
+            Box(3263, 6116, 3272, 6117),
+            Box(3271, 6116, 3272, 6118),
+            Box(3253, 6044, 3254, 6047),
+            Box(3271, 6116, 3274, 6118),
         )
 
-    private val GRASSED_OVERLAYS =
-        setOf(PATH_OVERLAY, ARCHERY_FLOOR_OVERLAY, TELEPORT_PLATFORM_OVERLAY)
+    private val TOWER_RING =
+        listOf(
+            Box(3248, 6067, 3249, 6100),
+            Box(3279, 6067, 3280, 6100),
+            Box(3248, 6067, 3280, 6068),
+            Box(3248, 6099, 3280, 6100),
+        )
 
     private val REED_POND = Box(3299, 6039, 3303, 6043)
     private val REED_POND_COPY_CORNERS = listOf(3304 to 6045)
@@ -96,7 +109,12 @@ object PrifddinasTerrain {
     private fun isClearedHouse(x: Int, z: Int): Boolean =
         CLEARED_HOUSE_FOOTPRINTS.any { it.contains(x, z) }
 
-    private fun isGrassedZone(x: Int, z: Int): Boolean = GRASSED_ZONES.any { it.contains(x, z) }
+    private fun isRegrassed(x: Int, z: Int): Boolean =
+        isInsideCity(x, z) && KEPT_AREAS.none { it.contains(x, z) }
+
+    private fun isPath(x: Int, z: Int): Boolean = PATH_ZONES.any { it.contains(x, z) }
+
+    private fun isTowerRing(x: Int, z: Int): Boolean = TOWER_RING.any { it.contains(x, z) }
 
     private fun reedPondSource(x: Int, z: Int): Pair<Int, Int>? {
         for ((cornerX, cornerZ) in REED_POND_COPY_CORNERS) {
@@ -154,7 +172,14 @@ object PrifddinasTerrain {
                     val clearFloor = cleared && level > 0
                     val unlink = cleared && level == BRIDGE_FLAG_LEVEL
                     val unblock = level == 0 && isClearedHouse(baseX + x, baseZ + z)
-                    val grass = level == 0 && isGrassedZone(baseX + x, baseZ + z)
+                    if (level == 0 && isRegrassed(baseX + x, baseZ + z)) {
+                        pos = rewriteGround(data, pos, out, isPath(baseX + x, baseZ + z), unblock)
+                        continue
+                    }
+                    if (level == 0 && isTowerRing(baseX + x, baseZ + z)) {
+                        pos = rewriteGround(data, pos, out, true, unblock = false, ring = true)
+                        continue
+                    }
                     while (true) {
                         val opcode = data.u16(pos)
                         pos += 2
@@ -169,8 +194,7 @@ object PrifddinasTerrain {
                                 break
                             }
                             opcode <= OPCODE_OVERLAY_LAST -> {
-                                val grassed = grass && data.u16(pos) in GRASSED_OVERLAYS
-                                if (!clearFloor && !grassed) {
+                                if (!clearFloor) {
                                     out.writeShort(opcode)
                                     out.write(data, pos, 2)
                                 }
@@ -194,6 +218,82 @@ object PrifddinasTerrain {
         }
         out.write(data, pos, data.size - pos)
         return out.toByteArray()
+    }
+
+    private fun rewriteGround(
+        data: ByteArray,
+        start: Int,
+        out: ByteArrayOutputStream,
+        path: Boolean,
+        unblock: Boolean,
+        ring: Boolean = false,
+    ): Int {
+        var pos = start
+        var overlay = -1
+        var overlayOpcode = OVERLAY_OPCODE_SHAPE_0
+        var settings = 0
+        var underlay = -1
+        var terminator = OPCODE_END
+        var height = 0
+        while (true) {
+            val opcode = data.u16(pos)
+            pos += 2
+            if (opcode == OPCODE_END) {
+                break
+            }
+            if (opcode == OPCODE_HEIGHT) {
+                terminator = OPCODE_HEIGHT
+                height = data[pos++].toInt()
+                break
+            }
+            when {
+                opcode <= OPCODE_OVERLAY_LAST -> {
+                    overlayOpcode = opcode
+                    overlay = data.u16(pos)
+                    pos += 2
+                }
+                opcode <= OPCODE_SETTINGS_LAST -> settings = opcode - SETTINGS_OFFSET
+                else -> underlay = opcode - UNDERLAY_OFFSET
+            }
+        }
+        if (ring && overlay != -1 && overlay != PATH_OVERLAY) {
+            out.write(data, start, pos - start)
+            return pos
+        }
+        if (!path) {
+            if (overlay in STRIPPED_OVERLAYS) {
+                overlay = -1
+                underlay = GRASS_UNDERLAY
+            } else if (overlay == -1 && underlay in RECOLOURED_UNDERLAYS) {
+                underlay = GRASS_UNDERLAY
+            }
+        } else if (overlay == -1) {
+            overlay = PATH_OVERLAY
+            overlayOpcode = OVERLAY_OPCODE_SHAPE_0
+            if (underlay == -1) {
+                underlay = GRASS_UNDERLAY
+            }
+        } else if (overlay == PATH_OVERLAY) {
+            overlayOpcode = OVERLAY_OPCODE_SHAPE_0
+        }
+        if (unblock) {
+            settings = settings and BLOCKED.inv()
+        }
+        if (overlay != -1) {
+            out.writeShort(overlayOpcode)
+            out.writeShort(overlay)
+        }
+        if (settings != 0) {
+            out.writeShort(settings + SETTINGS_OFFSET)
+        }
+        if (underlay != -1) {
+            out.writeShort(underlay + UNDERLAY_OFFSET)
+        }
+        out.writeShort(terminator)
+        if (terminator == OPCODE_HEIGHT) {
+            out.write(height)
+        }
+        return pos
     }
 
     fun linkBelowTiles(data: ByteArray): BooleanArray {
