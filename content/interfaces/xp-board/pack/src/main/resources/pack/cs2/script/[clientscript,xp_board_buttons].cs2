@@ -1,0 +1,2 @@
+[clientscript,xp_board_buttons](int $selected)
+~xp_board_filters($selected);

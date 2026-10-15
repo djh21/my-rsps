@@ -1,0 +1,127 @@
+[proc,xp_board_filters](int $selected)
+def_component $b0 = xp_board:filter0;
+def_component $b1 = xp_board:filter1;
+def_component $b2 = xp_board:filter2;
+def_component $b3 = xp_board:filter3;
+def_component $b4 = xp_board:filter4;
+def_component $b5 = xp_board:filter5;
+def_component $b6 = xp_board:filter6;
+def_component $b7 = xp_board:filter7;
+def_component $b8 = xp_board:filter8;
+def_component $b9 = xp_board:filter9;
+def_component $b10 = xp_board:filter10;
+def_component $b11 = xp_board:filter11;
+def_component $b12 = xp_board:filter12;
+def_component $b13 = xp_board:filter13;
+def_component $b14 = xp_board:filter14;
+def_component $b15 = xp_board:filter15;
+def_component $b16 = xp_board:filter16;
+def_component $b17 = xp_board:filter17;
+def_component $b18 = xp_board:filter18;
+def_component $b19 = xp_board:filter19;
+def_component $b20 = xp_board:filter20;
+def_component $b21 = xp_board:filter21;
+def_component $b22 = xp_board:filter22;
+def_component $b23 = xp_board:filter23;
+def_component $b24 = xp_board:filter24;
+def_component $active = null;
+if ($selected = 0) {
+    $active = $b0;
+}
+if ($selected = 1) {
+    $active = $b1;
+}
+if ($selected = 2) {
+    $active = $b2;
+}
+if ($selected = 3) {
+    $active = $b3;
+}
+if ($selected = 4) {
+    $active = $b4;
+}
+if ($selected = 5) {
+    $active = $b5;
+}
+if ($selected = 6) {
+    $active = $b6;
+}
+if ($selected = 7) {
+    $active = $b7;
+}
+if ($selected = 8) {
+    $active = $b8;
+}
+if ($selected = 9) {
+    $active = $b9;
+}
+if ($selected = 10) {
+    $active = $b10;
+}
+if ($selected = 11) {
+    $active = $b11;
+}
+if ($selected = 12) {
+    $active = $b12;
+}
+if ($selected = 13) {
+    $active = $b13;
+}
+if ($selected = 14) {
+    $active = $b14;
+}
+if ($selected = 15) {
+    $active = $b15;
+}
+if ($selected = 16) {
+    $active = $b16;
+}
+if ($selected = 17) {
+    $active = $b17;
+}
+if ($selected = 18) {
+    $active = $b18;
+}
+if ($selected = 19) {
+    $active = $b19;
+}
+if ($selected = 20) {
+    $active = $b20;
+}
+if ($selected = 21) {
+    $active = $b21;
+}
+if ($selected = 22) {
+    $active = $b22;
+}
+if ($selected = 23) {
+    $active = $b23;
+}
+if ($selected = 24) {
+    $active = $b24;
+}
+~button_setup($active, $b0, "Total");
+~button_setup($active, $b1, "Attack");
+~button_setup($active, $b2, "Defence");
+~button_setup($active, $b3, "Strength");
+~button_setup($active, $b4, "Hitpoints");
+~button_setup($active, $b5, "Ranged");
+~button_setup($active, $b6, "Prayer");
+~button_setup($active, $b7, "Magic");
+~button_setup($active, $b8, "Cooking");
+~button_setup($active, $b9, "Woodcutting");
+~button_setup($active, $b10, "Fletching");
+~button_setup($active, $b11, "Fishing");
+~button_setup($active, $b12, "Firemaking");
+~button_setup($active, $b13, "Crafting");
+~button_setup($active, $b14, "Smithing");
+~button_setup($active, $b15, "Mining");
+~button_setup($active, $b16, "Herblore");
+~button_setup($active, $b17, "Agility");
+~button_setup($active, $b18, "Thieving");
+~button_setup($active, $b19, "Slayer");
+~button_setup($active, $b20, "Farming");
+~button_setup($active, $b21, "Runecrafting");
+~button_setup($active, $b22, "Hunter");
+~button_setup($active, $b23, "Construction");
+~button_setup($active, $b24, "Sailing");

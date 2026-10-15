@@ -1,0 +1,6 @@
+[gamevals.interface]
+xp_board = 1200
+
+[gamevals.clientscript]
+xp_board_init = 45700
+xp_board_buttons = 45701

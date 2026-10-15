@@ -1,0 +1,1211 @@
+[[interface]]
+name = "interface.xp_board"
+width = 640
+height = 440
+on_load = ["clientscript.xp_board_init", "component.xp_board:border", "component.xp_board:filterbox", "component.xp_board:listbox", "component.xp_board:prev", "component.xp_board:next"]
+
+[[component]]
+name = "border"
+type = "layer"
+x = 0
+y = 0
+width = 640
+height = 440
+no_click_through = true
+
+[[component]]
+name = "filterbox"
+type = "layer"
+x = 10
+y = 40
+width = 620
+height = 120
+
+[[component]]
+name = "listbox"
+type = "layer"
+x = 10
+y = 168
+width = 620
+height = 232
+
+[[component]]
+name = "filter0"
+type = "layer"
+x = 250
+y = 48
+width = 140
+height = 24
+options = ["Select"]
+
+[[component]]
+name = "filter1"
+type = "layer"
+x = 18
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter2"
+type = "layer"
+x = 94
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter3"
+type = "layer"
+x = 170
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter4"
+type = "layer"
+x = 246
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter5"
+type = "layer"
+x = 322
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter6"
+type = "layer"
+x = 398
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter7"
+type = "layer"
+x = 474
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter8"
+type = "layer"
+x = 550
+y = 78
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter9"
+type = "layer"
+x = 18
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter10"
+type = "layer"
+x = 94
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter11"
+type = "layer"
+x = 170
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter12"
+type = "layer"
+x = 246
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter13"
+type = "layer"
+x = 322
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter14"
+type = "layer"
+x = 398
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter15"
+type = "layer"
+x = 474
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter16"
+type = "layer"
+x = 550
+y = 104
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter17"
+type = "layer"
+x = 18
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter18"
+type = "layer"
+x = 94
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter19"
+type = "layer"
+x = 170
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter20"
+type = "layer"
+x = 246
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter21"
+type = "layer"
+x = 322
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter22"
+type = "layer"
+x = 398
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter23"
+type = "layer"
+x = 474
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "filter24"
+type = "layer"
+x = 550
+y = 130
+width = 72
+height = 22
+options = ["Select"]
+
+[[component]]
+name = "head_rank"
+type = "text"
+x = 18
+y = 169
+width = 46
+height = 20
+text = "Rank"
+font = "bold"
+h_align = "center"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
+
+[[component]]
+name = "head_name"
+type = "text"
+x = 76
+y = 169
+width = 240
+height = 20
+text = "Player"
+font = "bold"
+h_align = "left"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
+
+[[component]]
+name = "head_level"
+type = "text"
+x = 324
+y = 169
+width = 76
+height = 20
+text = "Level"
+font = "bold"
+h_align = "right"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
+
+[[component]]
+name = "head_xp"
+type = "text"
+x = 412
+y = 169
+width = 210
+height = 20
+text = "Experience"
+font = "bold"
+h_align = "right"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
+
+[[component]]
+name = "rank0"
+type = "text"
+x = 18
+y = 189
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name0"
+type = "text"
+x = 76
+y = 189
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level0"
+type = "text"
+x = 324
+y = 189
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp0"
+type = "text"
+x = 412
+y = 189
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank1"
+type = "text"
+x = 18
+y = 203
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name1"
+type = "text"
+x = 76
+y = 203
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level1"
+type = "text"
+x = 324
+y = 203
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp1"
+type = "text"
+x = 412
+y = 203
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank2"
+type = "text"
+x = 18
+y = 217
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name2"
+type = "text"
+x = 76
+y = 217
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level2"
+type = "text"
+x = 324
+y = 217
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp2"
+type = "text"
+x = 412
+y = 217
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank3"
+type = "text"
+x = 18
+y = 231
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name3"
+type = "text"
+x = 76
+y = 231
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level3"
+type = "text"
+x = 324
+y = 231
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp3"
+type = "text"
+x = 412
+y = 231
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank4"
+type = "text"
+x = 18
+y = 245
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name4"
+type = "text"
+x = 76
+y = 245
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level4"
+type = "text"
+x = 324
+y = 245
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp4"
+type = "text"
+x = 412
+y = 245
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank5"
+type = "text"
+x = 18
+y = 259
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name5"
+type = "text"
+x = 76
+y = 259
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level5"
+type = "text"
+x = 324
+y = 259
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp5"
+type = "text"
+x = 412
+y = 259
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank6"
+type = "text"
+x = 18
+y = 273
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name6"
+type = "text"
+x = 76
+y = 273
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level6"
+type = "text"
+x = 324
+y = 273
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp6"
+type = "text"
+x = 412
+y = 273
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank7"
+type = "text"
+x = 18
+y = 287
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name7"
+type = "text"
+x = 76
+y = 287
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level7"
+type = "text"
+x = 324
+y = 287
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp7"
+type = "text"
+x = 412
+y = 287
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank8"
+type = "text"
+x = 18
+y = 301
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name8"
+type = "text"
+x = 76
+y = 301
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level8"
+type = "text"
+x = 324
+y = 301
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp8"
+type = "text"
+x = 412
+y = 301
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank9"
+type = "text"
+x = 18
+y = 315
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name9"
+type = "text"
+x = 76
+y = 315
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level9"
+type = "text"
+x = 324
+y = 315
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp9"
+type = "text"
+x = 412
+y = 315
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank10"
+type = "text"
+x = 18
+y = 329
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name10"
+type = "text"
+x = 76
+y = 329
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level10"
+type = "text"
+x = 324
+y = 329
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp10"
+type = "text"
+x = 412
+y = 329
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank11"
+type = "text"
+x = 18
+y = 343
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name11"
+type = "text"
+x = 76
+y = 343
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level11"
+type = "text"
+x = 324
+y = 343
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp11"
+type = "text"
+x = 412
+y = 343
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank12"
+type = "text"
+x = 18
+y = 357
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name12"
+type = "text"
+x = 76
+y = 357
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level12"
+type = "text"
+x = 324
+y = 357
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp12"
+type = "text"
+x = 412
+y = 357
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank13"
+type = "text"
+x = 18
+y = 371
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name13"
+type = "text"
+x = 76
+y = 371
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level13"
+type = "text"
+x = 324
+y = 371
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp13"
+type = "text"
+x = 412
+y = 371
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "rank14"
+type = "text"
+x = 18
+y = 385
+width = 46
+height = 14
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "name14"
+type = "text"
+x = 76
+y = 385
+width = 240
+height = 14
+text = ""
+font = "regular"
+h_align = "left"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "level14"
+type = "text"
+x = 324
+y = 385
+width = 76
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "xp14"
+type = "text"
+x = 412
+y = 385
+width = 210
+height = 14
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FFFFFF"
+text_shadow = true
+
+[[component]]
+name = "status"
+type = "text"
+x = 10
+y = 189
+width = 620
+height = 210
+text = ""
+font = "bold"
+h_align = "center"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
+
+[[component]]
+name = "prev"
+type = "layer"
+x = 10
+y = 408
+width = 64
+height = 22
+options = ["Previous page"]
+
+[[component]]
+name = "next"
+type = "layer"
+x = 78
+y = 408
+width = 64
+height = 22
+options = ["Next page"]
+
+[[component]]
+name = "pagelabel"
+type = "text"
+x = 150
+y = 408
+width = 150
+height = 22
+text = ""
+font = "regular"
+h_align = "center"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
+
+[[component]]
+name = "skilllabel"
+type = "text"
+x = 300
+y = 408
+width = 322
+height = 22
+text = ""
+font = "regular"
+h_align = "right"
+v_align = "center"
+color = "#FF981F"
+text_shadow = true
