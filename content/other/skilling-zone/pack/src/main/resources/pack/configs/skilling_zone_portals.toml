@@ -1,0 +1,9 @@
+[[object]]
+id = "loc.pure_essence_portal"
+inherit = "loc.poh_portal_teak_mind_altar"
+name = "Pure Essence Portal"
+
+[[object]]
+id = "loc.prifddinas_portal"
+inherit = "loc.poh_portal_teak_stronghold"
+name = "Prifddinas Portal"

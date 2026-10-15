@@ -15,6 +15,7 @@ class PrifWallsTest {
         assertRingClosed(3266, 6052, 3288, 6063, Entrance(Side.West, start = 6056, width = 4))
         assertRingClosed(3267, 6119, 3293, 6132, Entrance(Side.South, start = 3271, width = 4))
         assertRingClosed(3220, 6029, 3252, 6049, Entrance(Side.East, start = 6044, width = 4))
+        assertRingClosed(3284, 6084, 3313, 6118, Entrance(Side.South, start = 3296, width = 4))
     }
 
     @Test
@@ -109,7 +110,7 @@ class PrifWallsTest {
         private const val BASE_X = 3200
         private const val BASE_Z = 6000
         private const val MIN_SIDE = 12
-        private const val MAX_SIDE = 30
+        private const val MAX_SIDE = 35
         private const val ENTRANCE_WIDTH = 4
         private val UNBUILDABLE_RUNS = setOf(1, 3)
     }

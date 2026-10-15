@@ -35,6 +35,9 @@ constructor(private val locRepo: LocRepository, private val npcRepo: NpcReposito
                 SmithingZone,
                 FiremakingZone,
                 ThievingZone,
+                CraftingZone,
+                RunecraftingZone,
+                SkillingHubZone,
             )
     }
 }

@@ -66,6 +66,7 @@ object PrifddinasTerrain {
             Box(3228, 6085, 3235, 6092),
             Box(3266, 6123, 3272, 6128),
             Box(3268, 6118, 3270, 6119),
+            Box(3258, 6111, 3260, 6113),
         )
 
     private val STRIPPED_OVERLAYS = setOf(106, 81, 61, 22, 42)
@@ -85,6 +86,8 @@ object PrifddinasTerrain {
             Box(3271, 6116, 3272, 6118),
             Box(3253, 6044, 3254, 6047),
             Box(3271, 6116, 3274, 6118),
+            Box(3297, 6084, 3298, 6108),
+            Box(3255, 6101, 3258, 6104),
         )
 
     private val TOWER_RING =

@@ -12,3 +12,39 @@ option1 = "Hidden"
 id = "loc.elf_village_range"
 inherit = "loc.elf_village_range"
 contentGroup = "content.cooking_range_standard"
+
+[[object]]
+id = "loc.poh_altar_saradomin_3"
+inherit = "loc.poh_altar_saradomin_3"
+option2 = "Hidden"
+
+[[object]]
+id = "loc.poh_altar_zamorak_3"
+inherit = "loc.poh_altar_zamorak_3"
+option2 = "Hidden"
+
+[[object]]
+id = "loc.poh_altar_guthix_3"
+inherit = "loc.poh_altar_guthix_3"
+option2 = "Hidden"
+
+[[object]]
+id = "loc.poh_statue_saradomin"
+inherit = "loc.poh_statue_saradomin"
+option1 = "Hidden"
+
+[[object]]
+id = "loc.poh_statue_zamorak"
+inherit = "loc.poh_statue_zamorak"
+option1 = "Hidden"
+
+[[object]]
+id = "loc.poh_statue_guthix"
+inherit = "loc.poh_statue_guthix"
+option1 = "Hidden"
+
+[[object]]
+id = "loc.hiscores_board"
+inherit = "loc.fossil_tasklist"
+name = "Hiscores Board"
+option1 = "View"
