@@ -27,6 +27,14 @@ constructor(private val locRepo: LocRepository, private val npcRepo: NpcReposito
 
     private companion object {
         private val ZONES =
-            listOf(WoodcuttingZone, FishingZone, CookingZone, MiningZone, SmithingZone)
+            listOf(
+                WoodcuttingZone,
+                FishingZone,
+                CookingZone,
+                MiningZone,
+                SmithingZone,
+                FiremakingZone,
+                ThievingZone,
+            )
     }
 }
