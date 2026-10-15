@@ -8,6 +8,7 @@ kotlin {
 
 dependencies {
     implementation(libs.fastutil)
+    implementation(libs.jackson.dataformat.toml)
     api(libs.openrune.central.common)
     implementation(projects.engine.annotations)
     implementation(projects.api.attr)

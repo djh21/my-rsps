@@ -1,0 +1,5 @@
+# Copy to .data/owners.toml (gitignored) and list the account LOGIN names of the server owners.
+# An owner always gets administrator rights and may use every command, whatever the central
+# account says. Matching ignores case and treats spaces, underscores and dashes as the same.
+# A missing file means no owners. Read on every login, so edits apply to the next login.
+owners = ["your_login_name"]

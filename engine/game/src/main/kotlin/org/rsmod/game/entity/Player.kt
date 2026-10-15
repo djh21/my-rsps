@@ -206,6 +206,7 @@ public class Player(
     public var runWeight: Int = 0
 
     public var modLevel: Rights = Rights.NONE
+    public var isOwner: Boolean = false
 
     public val attr: AttributeMap = AttributeMap()
     public var xpRate: Double = 1.0

@@ -31,6 +31,7 @@ import org.rsmod.game.GameUpdate.Companion.isCountdown
 import org.rsmod.game.GameUpdate.Companion.isUpdating
 import org.rsmod.game.entity.Player
 import org.rsmod.game.entity.player.SessionStateEvent
+import org.rsmod.game.entity.player.applyOwnerRole
 import org.rsmod.map.CoordGrid
 
 class AccountLoadResponseHook(
@@ -299,6 +300,7 @@ class AccountLoadResponseHook(
             player.modLevel = Rights.fromRightsColumn(rights)
         }
         pendingCentralRights = null
+        player.applyOwnerRole()
     }
 
     public val LOGIN_EXIT_COORD: AttributeKey<Int> = AttributeKey(persistenceKey = "instance_exit_coord")

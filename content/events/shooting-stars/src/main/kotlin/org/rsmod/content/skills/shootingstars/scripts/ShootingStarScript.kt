@@ -1,5 +1,6 @@
 package org.rsmod.content.skills.shootingstars.scripts
 
+import dev.or2.central.account.Rights
 import jakarta.inject.Inject
 import org.rsmod.api.game.process.GameLifecycle
 import org.rsmod.api.player.output.mes
@@ -43,6 +44,7 @@ constructor(
         }
 
         onCommand("star") {
+            requiredRights = Rights.ADMINISTRATOR
             desc = "Force-spawn a shooting star"
             invalidArgs = "Usage: ::star [LOCATION|ANY] (ex: ::star MINING_GUILD)"
             cheat { forceStar() }

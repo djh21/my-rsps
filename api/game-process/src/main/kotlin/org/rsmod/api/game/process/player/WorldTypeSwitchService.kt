@@ -20,6 +20,7 @@ import org.rsmod.events.EventBus
 import org.rsmod.game.entity.Player
 import org.rsmod.game.entity.player.SessionStateEvent
 import org.rsmod.game.entity.player.WorldTypeChangedEvent
+import org.rsmod.game.entity.player.applyOwnerRole
 import org.rsmod.game.entity.util.PathingEntityCommon
 import org.rsmod.game.map.collision.isZoneValid
 import org.rsmod.game.world.WorldType
@@ -180,6 +181,7 @@ constructor(
             if (realm.config.devMode) {
                 player.modLevel = Rights.ADMINISTRATOR
             }
+            player.applyOwnerRole()
             val after = snapshot(player)
 
             // The appliers assign `coords` outright, which skips the zone bookkeeping a registered

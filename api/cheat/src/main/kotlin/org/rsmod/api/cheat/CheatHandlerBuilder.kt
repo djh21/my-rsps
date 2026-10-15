@@ -39,7 +39,7 @@ public class CheatHandlerBuilder(public val command: String) {
         requiredRights: Rights?,
         cheat: Cheat.() -> Unit,
     ): Cheat.() -> Unit = action@{
-        if (requiredRights != null && !player.modLevel.isAtLeast(requiredRights)) {
+        if (!CommandPermissions.current.canUse(player, command, requiredRights)) {
             invalidRightsMsg?.let(player::mes)
             return@action
         }

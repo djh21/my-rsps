@@ -254,6 +254,9 @@ Baseline numbers, taken from this repo's `SpawnInterface.kt` and the OSRS client
   central-server link (PostgreSQL). `game.example.yml` documents extra keys, e.g.
   `gameplay.quest-requirements.mode` (`assume-completed` / `respect-progress` /
   `virtual-completions`) and remote central config.
+- `.data/owners.toml` (gitignored, see `owners.example.toml`): login names of the owners. An
+  owner is forced to administrator and may run every command. Staff commands for admins and mods
+  are allowlisted in `content/other/commands/src/main/resources/command-permissions.toml`.
 
 ## Docs worth reading before touching a system
 

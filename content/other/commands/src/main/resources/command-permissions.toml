@@ -1,0 +1,17 @@
+# Which staff commands each rank may use. The owner (see .data/owners.toml) may use every command.
+# Admin and mod each get their own list; a rank can only run commands named in its own list.
+# Names are the command as typed after "::", lowercase (aliases count as separate names).
+# Commands that are not staff-only (worldtype, skilling, discordlink, ...) need no entry.
+#
+# Example:
+#   [admin]
+#   commands = ["item", "tele", "mypos"]
+#
+#   [mod]
+#   commands = ["mypos"]
+
+[admin]
+commands = []
+
+[mod]
+commands = []

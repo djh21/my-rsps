@@ -7,6 +7,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(libs.jackson.dataformat.toml)
     implementation(libs.kotlin.inline.logger)
     runtimeOnly(libs.logback.classic)
     implementation(projects.api.playerOutput)
