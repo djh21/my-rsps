@@ -12,6 +12,7 @@ class PrifWallsTest {
         assertRingClosed(3293, 6036, 3310, 6051, Entrance(Side.North, start = 3300, width = 4))
         assertRingClosed(3299, 6060, 3311, 6079, Entrance(Side.West, start = 6064, width = 4))
         assertRingClosed(3266, 6030, 3288, 6046, Entrance(Side.North, start = 3279, width = 4))
+        assertRingClosed(3266, 6052, 3288, 6063, Entrance(Side.East, start = 6056, width = 4))
     }
 
     @Test
