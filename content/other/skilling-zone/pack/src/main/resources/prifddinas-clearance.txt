@@ -8351,3 +8351,4 @@ loc.prif_marketstall_silk 3281 6094 0 10
 loc.prif_marketstall_silver 3281 6097 0 10
 loc.prif_marketstall_gem 3275 6100 0 10
 loc.prif_marketstall_spice 3276 6094 0 10
+loc.plants_update_small_bush_grassland 3248 6094 0 10
